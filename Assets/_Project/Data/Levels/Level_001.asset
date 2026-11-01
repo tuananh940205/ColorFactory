@@ -17,7 +17,7 @@ MonoBehaviour:
   assets:
     trayPrefabKey: TrayPrefab
     toyPrefabKey: ToyPrefab
-    backgroundSpriteKey: 
+    backgroundSpriteKey: FactoryBackground
     gameplaySpriteAtlasKey: 
   trays:
   - colors: 00000000010000000000000001000000

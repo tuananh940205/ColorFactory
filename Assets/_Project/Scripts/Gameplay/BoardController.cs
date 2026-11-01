@@ -1,4 +1,5 @@
 using ColorFactory.Core;
+using ColorFactory.UI;
 using UnityEngine;
 
 namespace ColorFactory.Gameplay
@@ -10,6 +11,10 @@ namespace ColorFactory.Gameplay
     {
         [SerializeField] private GameBootstrap gameBootstrap;
         [SerializeField] private BoardView boardView;
+        [SerializeField] private LevelCompleteView levelCompleteView;
+
+        // Ngăn người chơi tiếp tục di chuyển sau khi đã thắng.
+        private bool levelCompleted;
 
         // -1 nghĩa là hiện chưa có khay nguồn nào được chọn.
         private int selectedTrayIndex = -1;
@@ -75,7 +80,7 @@ namespace ColorFactory.Gameplay
         /// </summary>
         private void HandleTrayClicked(int clickedTrayIndex)
         {
-            if (!initialized || gameBootstrap.Board == null)
+            if (!initialized || levelCompleted || gameBootstrap.Board == null)
                 return;
 
             if (selectedTrayIndex == -1)
@@ -101,7 +106,14 @@ namespace ColorFactory.Gameplay
                 boardView.Render(gameBootstrap.Board);
 
                 if (gameBootstrap.Board.IsCompleted())
+                {
+                    // Khóa input trước khi hiện panel hoàn thành.
+                    levelCompleted = true;
                     Debug.Log("Level completed!");
+
+                    if (levelCompleteView != null)
+                        levelCompleteView.Show();
+                }
 
                 return;
             }
