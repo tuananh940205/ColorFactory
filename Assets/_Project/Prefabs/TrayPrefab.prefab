@@ -32,6 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3284155384376949921}
+  - {fileID: 6615234561255731145}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3145912723522790726
@@ -46,10 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e3685c41e380f4086f0eec71856191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Gameplay.TrayView
-  toyContainer: {fileID: 0}
+  toyContainer: {fileID: 6615234561255731145}
   trayRenderer: {fileID: 1416420613250606912}
-  firstToyLocalY: -0.8
-  toySpacing: 0.52
+  firstToyLocalY: -0.75
+  toySpacing: 0.5
   selectedColor: {r: 1, g: 0.9019608, b: 0.54901963, a: 1}
 --- !u!61 &5908403752892803971
 BoxCollider2D:
@@ -95,7 +96,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.55, y: 2.8}
+  m_Size: {x: 1.7, y: 2.55}
   m_EdgeRadius: 0
 --- !u!1 &5560781331109053333
 GameObject:
@@ -188,3 +189,34 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &8206660749757065011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6615234561255731145}
+  m_Layer: 0
+  m_Name: ToyContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6615234561255731145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8206660749757065011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875150180648221633}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
