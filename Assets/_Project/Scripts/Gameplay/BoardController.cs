@@ -1,3 +1,4 @@
+using System;
 using ColorFactory.Core;
 using ColorFactory.UI;
 using UnityEngine;
@@ -19,6 +20,16 @@ namespace ColorFactory.Gameplay
         // -1 nghĩa là hiện chưa có khay nguồn nào được chọn.
         private int selectedTrayIndex = -1;
         private bool initialized;
+        
+        /// <summary>
+        /// Tổng số nước đi hợp lệ của level hiện tại.
+        /// </summary>
+        public int MoveCount { get; private set; }
+
+        /// <summary>
+        /// UI đăng ký event này để cập nhật số nước đi.
+        /// </summary>
+        public event Action<int> MoveCountChanged;
 
         /// <summary>
         /// Chờ BoardView dựng tray xong rồi mới nhận input.
@@ -103,6 +114,9 @@ namespace ColorFactory.Gameplay
             {
                 // Model thay đổi trước, sau đó View render lại từ model.
                 ClearSelection();
+                // Chỉ tính nước đi khi BoardModel thực sự chấp nhận thao tác.
+                MoveCount++;
+                MoveCountChanged?.Invoke(MoveCount);
                 boardView.Render(gameBootstrap.Board);
 
                 if (gameBootstrap.Board.IsCompleted())
