@@ -1,20 +1,40 @@
+using System;
 using System.Collections.Generic;
 using ColorFactory.Core;
-using ColorFactory.Levels;
 using UnityEngine;
 
 namespace ColorFactory.Gameplay
 {
+    /// <summary>
+    /// Chuyển BoardModel thành GameObject được lấy từ pool.
+    /// </summary>
     public sealed class BoardView : MonoBehaviour
     {
         [SerializeField] private GameBootstrap gameBootstrap;
         [SerializeField] private Transform boardRoot;
         [SerializeField] private float traySpacing = 3f;
 
-        private readonly List<GameObject> spawnedInstances = new();
-        private PoolService poolService;
-        private bool built;
+        private readonly Dictionary<int, TrayView> trayViews = new();
+        private readonly List<GameObject> trayInstances = new();
+        private readonly List<GameObject> toyInstances = new();
 
+        private PoolService poolService;
+
+        public bool IsBuilt { get; private set; }
+
+        /// <summary>
+        /// BoardController nghe sự kiện này để nhận click từ TrayView.
+        /// </summary>
+        public event Action<int> TrayClicked;
+
+        /// <summary>
+        /// Báo rằng các tray đã được tạo xong.
+        /// </summary>
+        public event Action<BoardView> Built;
+
+        /// <summary>
+        /// Chờ GameBootstrap load xong rồi dựng board.
+        /// </summary>
         private void Start()
         {
             if (gameBootstrap == null)
@@ -29,72 +49,86 @@ namespace ColorFactory.Gameplay
                 gameBootstrap.Ready += Build;
         }
 
+        /// <summary>
+        /// Hủy event và trả object về pool nếu scene vẫn đang hoạt động.
+        /// </summary>
         private void OnDestroy()
         {
             if (gameBootstrap != null)
                 gameBootstrap.Ready -= Build;
 
-            Clear();
+            ClearAll();
         }
 
+        /// <summary>
+        /// Tạo tray một lần, sau đó render toy từ BoardModel.
+        /// </summary>
         private void Build(GameBootstrap bootstrap)
         {
-            if (built)
+            if (IsBuilt)
                 return;
 
-            if (boardRoot == null)
-                boardRoot = transform;
-
+            boardRoot ??= transform;
             poolService = FindFirstObjectByType<PoolService>();
 
-            if (poolService == null)
+            if (poolService == null || bootstrap.Board == null)
             {
-                Debug.LogError("BoardView could not find PoolService.", this);
-                return;
-            }
-
-            LevelData level = bootstrap.CurrentLevel;
-            if (level == null)
-            {
-                Debug.LogError("GameBootstrap has no loaded LevelData.", this);
+                Debug.LogError("BoardView cannot initialize.", this);
                 return;
             }
 
             float firstTrayX =
-                -((level.trays.Count - 1) * traySpacing) * 0.5f;
+                -((bootstrap.Board.TrayCount - 1) * traySpacing) * 0.5f;
 
-            for (int trayIndex = 0; trayIndex < level.trays.Count; trayIndex++)
+            for (int index = 0; index < bootstrap.Board.TrayCount; index++)
             {
                 GameObject trayObject =
-                    poolService.Get(level.assets.trayPrefabKey);
-
-                spawnedInstances.Add(trayObject);
+                    poolService.Get(bootstrap.CurrentLevel.assets.trayPrefabKey);
 
                 trayObject.transform.SetParent(boardRoot, false);
                 trayObject.transform.localPosition =
-                    new Vector3(firstTrayX + trayIndex * traySpacing, 0f, 0f);
+                    new Vector3(firstTrayX + index * traySpacing, 0f, 0f);
 
-                TrayView trayView =
-                    trayObject.GetComponent<TrayView>();
+                TrayView trayView = trayObject.GetComponent<TrayView>();
 
                 if (trayView == null)
                 {
-                    Debug.LogError(
-                        "TrayPrefab requires a TrayView component on its root.",
-                        trayObject);
+                    Debug.LogError("TrayPrefab needs TrayView.", trayObject);
+                    poolService.Return(trayObject);
                     continue;
                 }
 
-                trayView.Setup(trayIndex);
+                trayView.Setup(index);
+                trayView.Clicked += HandleTrayClicked;
 
-                TrayData trayData = level.trays[trayIndex];
+                trayInstances.Add(trayObject);
+                trayViews.Add(index, trayView);
+            }
 
-                for (int toyIndex = 0; toyIndex < trayData.colors.Count; toyIndex++)
+            IsBuilt = true;
+            Render(bootstrap.Board);
+            Built?.Invoke(this);
+        }
+
+        /// <summary>
+        /// Chỉ trả toy cũ về pool rồi tạo toy mới theo BoardModel hiện tại.
+        /// Tray được giữ nguyên để tránh tạo lại không cần thiết.
+        /// </summary>
+        public void Render(BoardModel board)
+        {
+            if (!IsBuilt || board == null)
+                return;
+
+            ClearToys();
+
+            foreach ((int trayIndex, TrayView trayView) in trayViews)
+            {
+                IReadOnlyList<ToyColor> colors = board.GetTray(trayIndex);
+
+                for (int toyIndex = 0; toyIndex < colors.Count; toyIndex++)
                 {
-                    GameObject toyObject =
-                        poolService.Get(level.assets.toyPrefabKey);
-
-                    spawnedInstances.Add(toyObject);
+                    GameObject toyObject = poolService.Get(
+                        gameBootstrap.CurrentLevel.assets.toyPrefabKey);
 
                     toyObject.transform.SetParent(trayView.ToyContainer, false);
                     toyObject.transform.localPosition =
@@ -104,29 +138,73 @@ namespace ColorFactory.Gameplay
 
                     if (toyView == null)
                     {
-                        Debug.LogError(
-                            "ToyPrefab requires a ToyView component on its root.",
-                            toyObject);
+                        Debug.LogError("ToyPrefab needs ToyView.", toyObject);
+                        poolService.Return(toyObject);
                         continue;
                     }
 
-                    toyView.SetColor(trayData.colors[toyIndex]);
+                    toyView.SetColor(colors[toyIndex]);
+                    toyInstances.Add(toyObject);
                 }
             }
-
-            built = true;
         }
 
-        private void Clear()
+        /// <summary>
+        /// Cho BoardController tìm TrayView để bật/tắt highlight.
+        /// </summary>
+        public bool TryGetTrayView(int trayIndex, out TrayView trayView)
+        {
+            return trayViews.TryGetValue(trayIndex, out trayView);
+        }
+
+        /// <summary>
+        /// Chuyển click từ prefab thành event cấp board.
+        /// </summary>
+        private void HandleTrayClicked(int trayIndex)
+        {
+            TrayClicked?.Invoke(trayIndex);
+        }
+
+        /// <summary>
+        /// Trả các toy đang hiển thị về pool trước mỗi lần render lại.
+        /// </summary>
+        private void ClearToys()
         {
             if (poolService == null || poolService.IsShuttingDown)
                 return;
 
-            for (int index = spawnedInstances.Count - 1; index >= 0; index--)
-                poolService.Return(spawnedInstances[index]);
+            for (int index = toyInstances.Count - 1; index >= 0; index--)
+                poolService.Return(toyInstances[index]);
 
-            spawnedInstances.Clear();
-            built = false;
+            toyInstances.Clear();
+        }
+
+        /// <summary>
+        /// Trả toàn bộ object về pool khi view bị hủy.
+        /// </summary>
+        private void ClearAll()
+        {
+            if (poolService == null || poolService.IsShuttingDown)
+                return;
+
+            ClearToys();
+
+            foreach (GameObject trayObject in trayInstances)
+            {
+                if (trayObject == null)
+                    continue;
+
+                TrayView trayView = trayObject.GetComponent<TrayView>();
+
+                if (trayView != null)
+                    trayView.Clicked -= HandleTrayClicked;
+
+                poolService.Return(trayObject);
+            }
+
+            trayInstances.Clear();
+            trayViews.Clear();
+            IsBuilt = false;
         }
     }
 }

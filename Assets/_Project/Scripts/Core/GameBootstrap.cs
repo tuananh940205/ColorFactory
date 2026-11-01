@@ -1,12 +1,17 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ColorFactory.Gameplay;
 using ColorFactory.Levels;
 using UnityEngine;
 using UnityEngine.U2D;
 
 namespace ColorFactory.Core
 {
+    /// <summary>
+    /// Điều phối vòng đời gameplay của scene:
+    /// load Addressables, tạo pool, tạo BoardModel và cleanup khi rời scene.
+    /// </summary>
     public sealed class GameBootstrap : MonoBehaviour
     {
         [Header("Services")]
@@ -14,7 +19,7 @@ namespace ColorFactory.Core
         [SerializeField] private PoolService poolService;
 
         [Header("Level")]
-        [Tooltip("Exact Addressables address and LevelData asset name.")]
+        [Tooltip("Addressables address chính xác của LevelData.")]
         [SerializeField] private string levelKey = "Level_001";
         [SerializeField, Min(0)] private int initialTrayPoolSize = 6;
         [SerializeField, Min(0)] private int initialToyPoolSize = 24;
@@ -24,29 +29,34 @@ namespace ColorFactory.Core
 
         private readonly LevelRepository levelRepository = new();
 
+        // Token dùng để hủy các load đang chờ khi scene bị hủy.
         private CancellationTokenSource lifetimeCancellation;
         private SceneAssetScope assetScope;
         private Task runTask;
         private Task cleanupTask;
 
         public LevelData CurrentLevel { get; private set; }
+        public BoardModel Board { get; private set; }
         public bool IsReady { get; private set; }
+
+        /// <summary>
+        /// Được gọi khi toàn bộ data, prefab template và pool đã sẵn sàng.
+        /// </summary>
         public event Action<GameBootstrap> Ready;
 
+        /// <summary>
+        /// Khởi tạo một lần khi scene bắt đầu.
+        /// </summary>
         private async void Start()
         {
             if (addressableService == null)
                 addressableService = AddressableService.Instance;
 
-            if (addressableService == null)
+            if (addressableService == null || poolService == null)
             {
-                Debug.LogError("GameBootstrap requires AddressableService.", this);
-                return;
-            }
-
-            if (poolService == null)
-            {
-                Debug.LogError("GameBootstrap requires PoolService.", this);
+                Debug.LogError(
+                    "GameBootstrap requires AddressableService and PoolService.",
+                    this);
                 return;
             }
 
@@ -59,7 +69,7 @@ namespace ColorFactory.Core
             }
             catch (OperationCanceledException)
             {
-                // Scene is leaving; cleanup follows in OnDestroy.
+                // Đây là trường hợp bình thường khi scene bị đóng lúc đang load.
             }
             catch (Exception exception)
             {
@@ -68,6 +78,9 @@ namespace ColorFactory.Core
             }
         }
 
+        /// <summary>
+        /// Load level, tạo model thuần C#, load prefab template và tạo pool.
+        /// </summary>
         private async Task InitializeAsync(CancellationToken cancellationToken)
         {
             assetScope = addressableService.CreateSceneScope(gameObject.scene.name);
@@ -76,6 +89,9 @@ namespace ColorFactory.Core
                 levelKey,
                 assetScope,
                 cancellationToken);
+
+            // BoardModel là nguồn dữ liệu gameplay duy nhất.
+            Board = new BoardModel(CurrentLevel);
 
             GameObject trayTemplate = await assetScope.LoadAsync<GameObject>(
                 CurrentLevel.assets.trayPrefabKey,
@@ -113,21 +129,14 @@ namespace ColorFactory.Core
 
             IsReady = true;
             Ready?.Invoke(this);
-
-            Debug.Log(
-                $"Color Factory ready: Level {CurrentLevel.levelId}, " +
-                $"Addressable keys held: {assetScope.LeaseCount}.",
-                this);
-
-            // Gameplay controller can now request:
-            // poolService.Get(CurrentLevel.assets.trayPrefabKey)
-            // poolService.Get(CurrentLevel.assets.toyPrefabKey)
         }
 
+        /// <summary>
+        /// Hủy load đang chạy và dọn pool/scope khi GameObject bị destroy.
+        /// </summary>
         private async void OnDestroy()
         {
-            if (lifetimeCancellation != null)
-                lifetimeCancellation.Cancel();
+            lifetimeCancellation?.Cancel();
 
             if (runTask != null)
             {
@@ -137,27 +146,29 @@ namespace ColorFactory.Core
                 }
                 catch
                 {
-                    // Initialization errors were already handled or cancellation is expected.
+                    // Lỗi load đã được xử lý tại Start.
                 }
             }
 
             await CleanupAsync();
         }
 
+        /// <summary>
+        /// Đảm bảo cleanup chỉ chạy một lần, kể cả khi có lỗi và scene đóng cùng lúc.
+        /// </summary>
         private Task CleanupAsync()
         {
-            if (cleanupTask != null)
-                return cleanupTask;
-
-            cleanupTask = CleanupInternalAsync();
+            cleanupTask ??= CleanupInternalAsync();
             return cleanupTask;
         }
 
+        /// <summary>
+        /// Bắt buộc clear pool trước rồi mới release Addressables scope.
+        /// </summary>
         private async Task CleanupInternalAsync()
         {
             IsReady = false;
 
-            // Required ordering: instances first, Addressables templates second.
             if (poolService != null)
             {
                 poolService.BeginShutdown();
@@ -172,6 +183,7 @@ namespace ColorFactory.Core
 
             lifetimeCancellation?.Dispose();
             lifetimeCancellation = null;
+            Board = null;
             CurrentLevel = null;
         }
     }
