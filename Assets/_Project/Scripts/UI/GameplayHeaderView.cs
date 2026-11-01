@@ -21,6 +21,7 @@ namespace ColorFactory.UI
         [SerializeField] private TMP_Text levelText;
         [SerializeField] private TMP_Text movesText;
         [SerializeField] private Button restartButton;
+        [SerializeField] private Button undoButton;
 
         private bool isBound;
 
@@ -42,6 +43,7 @@ namespace ColorFactory.UI
             }
 
             restartButton.onClick.AddListener(RestartCurrentLevel);
+            undoButton.onClick.AddListener(UndoLastMove);
 
             if (gameBootstrap.IsReady)
                 BindToGameplay();
@@ -62,6 +64,9 @@ namespace ColorFactory.UI
 
             if (restartButton != null)
                 restartButton.onClick.RemoveListener(RestartCurrentLevel);
+            
+            if (undoButton != null)
+                undoButton.onClick.RemoveListener(UndoLastMove);
         }
 
         /// <summary>
@@ -93,6 +98,8 @@ namespace ColorFactory.UI
         private void UpdateMovesText(int moveCount)
         {
             movesText.text = $"MOVES: {moveCount}";
+            // Undo chỉ bật khi có ít nhất một nước đi hợp lệ trong lịch sử.
+            undoButton.interactable = boardController.CanUndo;
         }
 
         /// <summary>
@@ -101,6 +108,15 @@ namespace ColorFactory.UI
         private void RestartCurrentLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+        /// <summary>
+        /// Gọi BoardController hoàn tác nước đi gần nhất.
+        /// UI tự cập nhật qua MoveCountChanged.
+        /// </summary>
+        private void UndoLastMove()
+        {
+            boardController.TryUndoLastMove();
         }
     }
 }

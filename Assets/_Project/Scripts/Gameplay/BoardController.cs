@@ -163,5 +163,35 @@ namespace ColorFactory.Gameplay
 
             selectedTrayIndex = -1;
         }
+        
+        /// <summary>
+        /// Cho UI biết liệu hiện có nước đi nào có thể hoàn tác hay không.
+        /// </summary>
+        public bool CanUndo =>
+            !levelCompleted &&
+            gameBootstrap != null &&
+            gameBootstrap.Board != null &&
+            gameBootstrap.Board.CanUndo;
+
+        /// <summary>
+        /// Hoàn tác nước đi mới nhất, cập nhật UI và render lại board.
+        /// </summary>
+        public bool TryUndoLastMove()
+        {
+            if (!initialized || !CanUndo)
+                return false;
+
+            // Bỏ highlight cũ trước khi render lại board.
+            ClearSelection();
+
+            if (!gameBootstrap.Board.TryUndo())
+                return false;
+
+            MoveCount = Mathf.Max(0, MoveCount - 1);
+            MoveCountChanged?.Invoke(MoveCount);
+
+            boardView.Render(gameBootstrap.Board);
+            return true;
+        }
     }
 }
