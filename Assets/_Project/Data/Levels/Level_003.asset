@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Levels.LevelData
   levelId: 2
   trayCapacity: 6
+  threeStarMoveTarget: 24
+  twoStarMoveTarget: 32
   assets:
     trayPrefabKey: TrayPrefab
     toyPrefabKey: ToyPrefab
@@ -22,6 +24,6 @@ MonoBehaviour:
   trays:
   - colors: 00000000010000000200000000000000
   - colors: 01000000020000000000000001000000
-  - colors: 02000000000000000100000002000000
-  - colors: 02000000000000000100000002000000
+  - colors: 020000000000000001000000
+  - colors: 020000000000000001000000
   - colors: 02000000000000000100000002000000

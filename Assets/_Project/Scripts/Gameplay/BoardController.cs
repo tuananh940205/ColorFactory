@@ -228,6 +228,12 @@ namespace ColorFactory.Gameplay
         /// </summary>
         private void HandleMoveAnimationCompleted(bool levelIsCompleted)
         {
+            isAnimatingMove = false;
+
+            // Chỉ hiện kết quả khi trạng thái board sau nước đi thật sự là hoàn thành.
+            if (!levelIsCompleted)
+                return;
+
             levelCompleted = true;
 
             LevelProgressService.MarkLevelCompleted(

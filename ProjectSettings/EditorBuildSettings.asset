@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/LevelSelect.unity
     guid: 1707a8464b13d3d4caa19fa19f340a8c
   - enabled: 1
-    path: Assets/Scenes/GamePlay.unity
+    path: Assets/_Project/Scenes/GamePlay.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 3249e79a72361ef4fbefad84e780f1e6, type: 2}
