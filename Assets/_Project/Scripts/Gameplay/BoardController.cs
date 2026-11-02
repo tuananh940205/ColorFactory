@@ -228,17 +228,16 @@ namespace ColorFactory.Gameplay
         /// </summary>
         private void HandleMoveAnimationCompleted(bool levelIsCompleted)
         {
-            isAnimatingMove = false;
-
-            if (!levelIsCompleted)
-                return;
-
             levelCompleted = true;
 
             LevelProgressService.MarkLevelCompleted(
                 gameBootstrap.CurrentLevel.levelId);
 
-            levelCompleteView.Show();
+            int stars = LevelResultCalculator.CalculateStars(
+                gameBootstrap.CurrentLevel,
+                MoveCount);
+
+            levelCompleteView.Show(MoveCount, stars);
         }
         
         /// <summary>

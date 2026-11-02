@@ -43,6 +43,10 @@ namespace ColorFactory.Levels
     {
         [Min(1)] public int levelId = 1;
         [Min(1)] public int trayCapacity = 4;
+        
+        [Header("Star Rating")]
+        [Min(1)] public int threeStarMoveTarget = 8;
+        [Min(1)] public int twoStarMoveTarget = 12;
 
         public LevelAssetConfig assets = new();
         public List<TrayData> trays = new();
@@ -55,6 +59,12 @@ namespace ColorFactory.Levels
             if (trayCapacity < 1)
                 throw new InvalidOperationException(
                     $"{name}: trayCapacity must be at least 1.");
+            
+            if (threeStarMoveTarget > twoStarMoveTarget)
+            {
+                throw new InvalidOperationException(
+                    $"{name}: 3-star target must be less than or equal to 2-star target.");
+            }
 
             if (assets == null)
                 throw new InvalidOperationException(
