@@ -1,0 +1,8 @@
+{
+    "tap": "Sfx_Tap",
+    "move": "Sfx_Move",
+    "undo": "Sfx_Undo",
+    "hint": "Sfx_Hint",
+    "win": "Sfx_Win",
+    "button": "Sfx_Button"
+}

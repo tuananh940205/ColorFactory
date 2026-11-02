@@ -1,3 +1,4 @@
+using ColorFactory.Audio;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -159,7 +160,11 @@ namespace ColorFactory.UI
         {
             Services.SceneFader?.TryLoadScene(
                 gameplaySceneName,
-                () => LevelSession.RequestLevel(levelId));
+                () =>
+                {
+                    Services.Audio?.Play(SfxType.Button);
+                    LevelSession.RequestLevel(levelId);
+                });
         }
     }
 }

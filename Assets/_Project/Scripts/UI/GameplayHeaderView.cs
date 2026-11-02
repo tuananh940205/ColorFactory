@@ -1,3 +1,4 @@
+using ColorFactory.Audio;
 using System;
 using ColorFactory.Core;
 using ColorFactory.Gameplay;
@@ -111,7 +112,8 @@ namespace ColorFactory.UI
         /// </summary>
         private void RestartCurrentLevel()
         {
-            Services.SceneFader?.TryReloadActiveScene();
+            Services.SceneFader?.TryReloadActiveScene(
+                () => Services.Audio?.Play(SfxType.Button));
         }
         
         /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using ColorFactory.Audio;
 using ColorFactory.Core;
 using ColorFactory.Levels;
 using ColorFactory.UI;
@@ -133,6 +134,10 @@ namespace ColorFactory.Gameplay
 
                 bool levelIsCompleted = gameBootstrap.Board.IsCompleted();
 
+                // Khi thắng, âm thanh win được phát sau khi toy đáp để không trùng với move.
+                if (!levelIsCompleted)
+                    Services.Audio?.Play(SfxType.Move);
+
                 boardView.AnimateMove(
                     fromTrayIndex,
                     clickedTrayIndex,
@@ -153,6 +158,8 @@ namespace ColorFactory.Gameplay
             ClearSelection();
 
             selectedTrayIndex = trayIndex;
+
+            Services.Audio?.Play(SfxType.Tap);
 
             if (boardView.TryGetTrayView(trayIndex, out TrayView trayView))
                 trayView.SetSelected(true);
@@ -201,6 +208,8 @@ namespace ColorFactory.Gameplay
             // Khi Undo, toy di chuyển ngược từ khay đích cũ về khay nguồn cũ.
             isAnimatingMove = true;
 
+            Services.Audio?.Play(SfxType.Undo);
+
             boardView.AnimateMove(
                 undoneMove.To,
                 undoneMove.From,
@@ -220,7 +229,10 @@ namespace ColorFactory.Gameplay
             ClearSelection();
 
             if (HintSolver.TryFindHint(gameBootstrap.Board, out MoveHint hint))
+            {
+                Services.Audio?.Play(SfxType.Hint);
                 boardView.ShowHint(hint.From, hint.To);
+            }
         }
         
         /// <summary>
@@ -236,6 +248,7 @@ namespace ColorFactory.Gameplay
 
             levelCompleted = true;
 
+            Services.Audio?.Play(SfxType.Win);
             boardView.PlayCompletionFeedback();
             
             int stars = LevelResultCalculator.CalculateStars(

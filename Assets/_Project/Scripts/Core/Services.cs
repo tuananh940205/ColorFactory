@@ -1,3 +1,5 @@
+using ColorFactory.Audio;
+
 namespace ColorFactory.Core
 {
     /// <summary>
@@ -7,6 +9,24 @@ namespace ColorFactory.Core
     {
         public static AddressableService Addressables { get; private set; }
         public static SceneFader SceneFader { get; private set; }
+        public static IAudioService Audio { get; private set; }
+
+        /// <summary>
+        /// Đăng ký service âm thanh khi AudioService được tạo.
+        /// </summary>
+        public static void Register(IAudioService service)
+        {
+            Audio = service;
+        }
+
+        /// <summary>
+        /// Gỡ service âm thanh khi AudioService bị hủy.
+        /// </summary>
+        public static void Unregister(IAudioService service)
+        {
+            if (Audio == service)
+                Audio = null;
+        }
 
         /// <summary>
         /// Đăng ký service Addressables khi bootstrap được tạo.

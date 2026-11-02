@@ -62,9 +62,9 @@ namespace ColorFactory.Core
         /// <summary>
         /// Bắt đầu tải lại scene hiện tại dưới lớp fade.
         /// </summary>
-        public bool TryReloadActiveScene()
+        public bool TryReloadActiveScene(Action onAccepted = null)
         {
-            return TryLoadScene(SceneManager.GetActiveScene().name);
+            return TryLoadScene(SceneManager.GetActiveScene().name, onAccepted);
         }
 
         /// <summary>

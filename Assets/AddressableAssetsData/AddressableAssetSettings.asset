@@ -25,11 +25,11 @@ MonoBehaviour:
   m_InternalBundleIdMode: 1
   m_AssetLoadMode: 0
   m_BundledAssetProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
   m_AssetBundleProviderType:
-    m_AssemblyName: 
-    m_ClassName: 
+    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
   m_IgnoreUnsupportedFilesInBuild: 0
   m_UniqueBundleIds: 0
   m_EnableJsonCatalog: 0
@@ -65,6 +65,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b8af704569b45c43a3e84e55759b730, type: 2}
   - {fileID: 11400000, guid: 478a561c20738794691d22f0461b954b, type: 2}
   - {fileID: 11400000, guid: 4539a0ce9f734d6458fefc0c8368fc3b, type: 2}
+  - {fileID: 11400000, guid: 4699c1bacd9f74540a4dbe017ff19e7a, type: 2}
   - {fileID: 11400000, guid: 21ff44e2d718c9444a005360626cb585, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1

@@ -1,3 +1,4 @@
+using ColorFactory.Audio;
 using ColorFactory.Core;
 using TMPro;
 using UnityEngine;
@@ -56,7 +57,8 @@ namespace ColorFactory.UI
         /// </summary>
         public void RestartLevel()
         {
-            Services.SceneFader?.TryReloadActiveScene();
+            Services.SceneFader?.TryReloadActiveScene(
+                () => Services.Audio?.Play(SfxType.Button));
         }
         
         /// <summary>
