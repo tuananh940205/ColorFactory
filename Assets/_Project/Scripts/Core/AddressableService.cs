@@ -26,19 +26,26 @@ namespace ColorFactory.Core
         private readonly Dictionary<string, Entry> entries = new();
         private readonly SemaphoreSlim entriesLock = new(1, 1);
 
-        public static AddressableService Instance { get; private set; }
         public int LoadedKeyCount => entries.Count;
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            if (Services.Addressables != null && Services.Addressables != this)
             {
                 Destroy(gameObject);
                 return;
             }
 
-            Instance = this;
+            Services.Register(this);
             DontDestroyOnLoad(gameObject);
+        }
+
+        /// <summary>
+        /// Gỡ service khỏi bộ định vị khi object gốc bị hủy.
+        /// </summary>
+        private void OnDestroy()
+        {
+            Services.Unregister(this);
         }
 
         public SceneAssetScope CreateSceneScope(string scopeName)

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ColorFactory.Core;
 using ColorFactory.Levels;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace ColorFactory.UI
 {
@@ -36,7 +35,7 @@ namespace ColorFactory.UI
         /// </summary>
         private async void Start()
         {
-            addressableService = AddressableService.Instance;
+            addressableService = Services.Addressables;
 
             if (addressableService == null)
             {
@@ -158,8 +157,9 @@ namespace ColorFactory.UI
         /// </summary>
         private void OpenLevel(int levelId)
         {
-            LevelSession.RequestLevel(levelId);
-            SceneManager.LoadScene(gameplaySceneName);
+            Services.SceneFader?.TryLoadScene(
+                gameplaySceneName,
+                () => LevelSession.RequestLevel(levelId));
         }
     }
 }

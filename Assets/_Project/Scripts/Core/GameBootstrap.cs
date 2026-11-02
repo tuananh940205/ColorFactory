@@ -52,7 +52,7 @@ namespace ColorFactory.Core
         private async void Start()
         {
             if (addressableService == null)
-                addressableService = AddressableService.Instance;
+                addressableService = Services.Addressables;
 
             if (addressableService == null || poolService == null)
             {
@@ -232,9 +232,9 @@ namespace ColorFactory.Core
                 CurrentLevel.levelId,
                 out int nextLevelId);
 
-            LevelSession.RequestLevel(nextLevelId);
-            UnityEngine.SceneManagement.SceneManager.LoadScene(
-                gameObject.scene.buildIndex);
+            Services.SceneFader?.TryLoadScene(
+                gameObject.scene.name,
+                () => LevelSession.RequestLevel(nextLevelId));
         }
     }
 }

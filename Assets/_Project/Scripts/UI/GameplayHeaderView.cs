@@ -3,7 +3,6 @@ using ColorFactory.Core;
 using ColorFactory.Gameplay;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace ColorFactory.UI
@@ -112,7 +111,7 @@ namespace ColorFactory.UI
         /// </summary>
         private void RestartCurrentLevel()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Services.SceneFader?.TryReloadActiveScene();
         }
         
         /// <summary>
