@@ -173,32 +173,39 @@ namespace ColorFactory.Gameplay
         }
         
         /// <summary>
-        /// Cho UI biết liệu hiện có nước đi nào có thể hoàn tác hay không.
+        /// Chỉ cho Undo khi board có lịch sử và không có animation đang chạy.
         /// </summary>
         public bool CanUndo =>
             !levelCompleted &&
+            !isAnimatingMove &&
             gameBootstrap != null &&
             gameBootstrap.Board != null &&
             gameBootstrap.Board.CanUndo;
 
         /// <summary>
-        /// Hoàn tác nước đi mới nhất, cập nhật UI và render lại board.
+        /// Hoàn tác nước đi gần nhất và animate toy bay ngược về khay nguồn cũ.
         /// </summary>
         public bool TryUndoLastMove()
         {
             if (!initialized || !CanUndo)
                 return false;
 
-            // Bỏ highlight cũ trước khi render lại board.
             ClearSelection();
 
-            if (!gameBootstrap.Board.TryUndo())
+            if (!gameBootstrap.Board.TryUndo(out BoardMove undoneMove))
                 return false;
 
             MoveCount = Mathf.Max(0, MoveCount - 1);
             MoveCountChanged?.Invoke(MoveCount);
 
-            boardView.Render(gameBootstrap.Board);
+            // Khi Undo, toy di chuyển ngược từ khay đích cũ về khay nguồn cũ.
+            isAnimatingMove = true;
+
+            boardView.AnimateMove(
+                undoneMove.To,
+                undoneMove.From,
+                HandleUndoAnimationCompleted);
+
             return true;
         }
         
@@ -232,6 +239,14 @@ namespace ColorFactory.Gameplay
                 gameBootstrap.CurrentLevel.levelId);
 
             levelCompleteView.Show();
+        }
+        
+        /// <summary>
+        /// Mở lại input sau khi animation Undo kết thúc.
+        /// </summary>
+        private void HandleUndoAnimationCompleted()
+        {
+            isAnimatingMove = false;
         }
     }
 }
