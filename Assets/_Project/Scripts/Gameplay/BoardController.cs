@@ -21,6 +21,8 @@ namespace ColorFactory.Gameplay
         // -1 nghĩa là hiện chưa có khay nguồn nào được chọn.
         private int selectedTrayIndex = -1;
         private bool initialized;
+        // Chặn input trong lúc toy đang bay giữa hai khay.
+        private bool isAnimatingMove;
         
         /// <summary>
         /// Tổng số nước đi hợp lệ của level hiện tại.
@@ -92,8 +94,13 @@ namespace ColorFactory.Gameplay
         /// </summary>
         private void HandleTrayClicked(int clickedTrayIndex)
         {
-            if (!initialized || levelCompleted || gameBootstrap.Board == null)
+            if (!initialized ||
+                levelCompleted ||
+                isAnimatingMove ||
+                gameBootstrap.Board == null)
+            {
                 return;
+            }
 
             if (selectedTrayIndex == -1)
             {
@@ -113,27 +120,23 @@ namespace ColorFactory.Gameplay
 
             if (gameBootstrap.Board.TryMove(selectedTrayIndex, clickedTrayIndex))
             {
-                // Model thay đổi trước, sau đó View render lại từ model.
+                int fromTrayIndex = selectedTrayIndex;
+
+                // Xóa highlight trước khi toy bắt đầu di chuyển.
                 ClearSelection();
-                // Chỉ tính nước đi khi BoardModel thực sự chấp nhận thao tác.
+
                 MoveCount++;
                 MoveCountChanged?.Invoke(MoveCount);
-                boardView.Render(gameBootstrap.Board);
 
-                if (gameBootstrap.Board.IsCompleted())
-                {
-                    // Khóa input trước khi hiện panel hoàn thành.
-                    levelCompleted = true;
-                    Debug.Log("Level completed!");
-                    
-                    // Lưu tiến độ trước khi cho phép nút Next Level xuất hiện.
-                    LevelProgressService.MarkLevelCompleted(
-                        gameBootstrap.CurrentLevel.levelId);
+                // BoardModel đã đổi state, còn BoardView giờ animate instance hiện có.
+                isAnimatingMove = true;
 
-                    if (levelCompleteView != null)
-                        levelCompleteView.Show();
-                }
+                bool levelIsCompleted = gameBootstrap.Board.IsCompleted();
 
+                boardView.AnimateMove(
+                    fromTrayIndex,
+                    clickedTrayIndex,
+                    () => HandleMoveAnimationCompleted(levelIsCompleted));
                 return;
             }
 
@@ -211,6 +214,24 @@ namespace ColorFactory.Gameplay
 
             if (HintSolver.TryFindHint(gameBootstrap.Board, out MoveHint hint))
                 boardView.ShowHint(hint.From, hint.To);
+        }
+        
+        /// <summary>
+        /// Mở lại input sau animation và hiện completion panel nếu level đã hoàn thành.
+        /// </summary>
+        private void HandleMoveAnimationCompleted(bool levelIsCompleted)
+        {
+            isAnimatingMove = false;
+
+            if (!levelIsCompleted)
+                return;
+
+            levelCompleted = true;
+
+            LevelProgressService.MarkLevelCompleted(
+                gameBootstrap.CurrentLevel.levelId);
+
+            levelCompleteView.Show();
         }
     }
 }

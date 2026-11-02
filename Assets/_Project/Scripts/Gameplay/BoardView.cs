@@ -22,6 +22,8 @@ namespace ColorFactory.Gameplay
         private readonly Dictionary<int, TrayView> trayViews = new();
         private readonly List<GameObject> trayInstances = new();
         private readonly List<GameObject> toyInstances = new();
+        // Lưu toy theo từng khay để biết toy nào cần animate khi di chuyển.
+        private readonly Dictionary<int, List<GameObject>> toyStacks = new();
 
         private PoolService poolService;
         private Coroutine hintRoutine;
@@ -108,6 +110,8 @@ namespace ColorFactory.Gameplay
 
                 trayInstances.Add(trayObject);
                 trayViews.Add(index, trayView);
+                // Mỗi TrayView có một stack GameObject tương ứng với BoardModel.
+                toyStacks.Add(index, new List<GameObject>());
             }
 
             IsBuilt = true;
@@ -150,6 +154,8 @@ namespace ColorFactory.Gameplay
 
                     toyView.SetColor(colors[toyIndex]);
                     toyInstances.Add(toyObject);
+                    // Lưu thứ tự toy từ đáy lên đỉnh, giống thứ tự trong BoardModel.
+                    toyStacks[trayIndex].Add(toyObject);
                 }
             }
         }
@@ -182,6 +188,9 @@ namespace ColorFactory.Gameplay
                 poolService.Return(toyInstances[index]);
 
             toyInstances.Clear();
+            // Xóa mapping cũ trước khi render lại toàn bộ toy.
+            foreach (List<GameObject> stack in toyStacks.Values)
+                stack.Clear();
         }
 
         /// <summary>
@@ -209,6 +218,7 @@ namespace ColorFactory.Gameplay
 
             trayInstances.Clear();
             trayViews.Clear();
+            toyStacks.Clear();
             IsBuilt = false;
         }
         
@@ -276,6 +286,88 @@ namespace ColorFactory.Gameplay
                       trayVerticalSpacing;
 
             return new Vector3(x, y, 0f);
+        }
+        
+        /// <summary>
+        /// Animate toy trên cùng từ khay nguồn sang khay đích.
+        /// BoardModel phải được cập nhật trước khi gọi hàm này.
+        /// </summary>
+        public void AnimateMove(
+            int fromTrayIndex,
+            int toTrayIndex,
+            System.Action onCompleted)
+        {
+            if (!toyStacks.TryGetValue(fromTrayIndex, out List<GameObject> sourceStack) ||
+                !toyStacks.TryGetValue(toTrayIndex, out List<GameObject> targetStack) ||
+                sourceStack.Count == 0 ||
+                !TryGetTrayView(toTrayIndex, out TrayView targetTray))
+            {
+                onCompleted?.Invoke();
+                return;
+            }
+
+            // Toy cuối stack chính là toy đang nằm trên cùng của khay nguồn.
+            GameObject movingToy = sourceStack[^1];
+            sourceStack.RemoveAt(sourceStack.Count - 1);
+
+            // Thêm toy vào stack đích trước để tính được slot local cuối cùng.
+            targetStack.Add(movingToy);
+
+            Vector3 destinationLocalPosition =
+                targetTray.GetToyLocalPosition(targetStack.Count - 1);
+
+            Vector3 destinationWorldPosition =
+                targetTray.ToyContainer.TransformPoint(destinationLocalPosition);
+
+            StartCoroutine(AnimateMoveRoutine(
+                movingToy,
+                targetTray,
+                destinationLocalPosition,
+                destinationWorldPosition,
+                onCompleted));
+        }
+
+        /// <summary>
+        /// Di chuyển toy trong world space, rồi parent lại vào khay đích khi kết thúc.
+        /// </summary>
+        private System.Collections.IEnumerator AnimateMoveRoutine(
+            GameObject movingToy,
+            TrayView targetTray,
+            Vector3 destinationLocalPosition,
+            Vector3 destinationWorldPosition,
+            System.Action onCompleted)
+        {
+            const float duration = 0.22f;
+
+            Vector3 startWorldPosition = movingToy.transform.position;
+
+            // Parent tạm vào BoardRoot để tọa độ world không bị ảnh hưởng bởi khay nguồn.
+            movingToy.transform.SetParent(boardRoot, true);
+
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+
+                float progress = Mathf.Clamp01(elapsed / duration);
+
+                // Ease-out làm toy chậm dần khi đến khay đích.
+                float easedProgress = 1f - Mathf.Pow(1f - progress, 3f);
+
+                movingToy.transform.position = Vector3.Lerp(
+                    startWorldPosition,
+                    destinationWorldPosition,
+                    easedProgress);
+
+                yield return null;
+            }
+
+            // Kết thúc animation: toy trở thành child thật của khay đích.
+            movingToy.transform.SetParent(targetTray.ToyContainer, false);
+            movingToy.transform.localPosition = destinationLocalPosition;
+
+            onCompleted?.Invoke();
         }
     }
 }
