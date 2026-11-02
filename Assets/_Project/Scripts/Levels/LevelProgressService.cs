@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ColorFactory.Levels
 {
     /// <summary>
-    /// Lưu level cao nhất người chơi đã mở khóa bằng PlayerPrefs.
+    /// Lưu tiến độ mở khóa, số sao tốt nhất và số nước đi tốt nhất.
     /// </summary>
     public static class LevelProgressService
     {
@@ -11,7 +11,7 @@ namespace ColorFactory.Levels
             "ColorFactory.HighestUnlockedLevel";
 
         /// <summary>
-        /// Trả level cao nhất đã mở; game mới luôn bắt đầu từ level 1.
+        /// Trả level cao nhất đã mở khóa; game mới luôn bắt đầu ở level 1.
         /// </summary>
         public static int GetHighestUnlockedLevel()
         {
@@ -21,7 +21,7 @@ namespace ColorFactory.Levels
         }
 
         /// <summary>
-        /// Kiểm tra một level đã được mở khóa hay chưa.
+        /// Kiểm tra level đã mở khóa hay chưa.
         /// </summary>
         public static bool IsUnlocked(int levelId)
         {
@@ -29,17 +29,77 @@ namespace ColorFactory.Levels
         }
 
         /// <summary>
-        /// Khi hoàn thành level N, mở khóa tối thiểu level N + 1.
+        /// Lưu kết quả hoàn thành và mở khóa level kế tiếp.
         /// </summary>
-        public static void MarkLevelCompleted(int completedLevelId)
+        public static void RecordCompletion(
+            int levelId,
+            int moveCount,
+            int stars)
         {
-            int currentHighest = GetHighestUnlockedLevel();
-            int newHighest = Mathf.Max(
-                currentHighest,
-                completedLevelId + 1);
+            stars = Mathf.Clamp(stars, 1, 3);
 
-            PlayerPrefs.SetInt(HighestUnlockedLevelKey, newHighest);
+            int previousBestStars = GetBestStars(levelId);
+
+            if (stars > previousBestStars)
+            {
+                PlayerPrefs.SetInt(
+                    GetBestStarsKey(levelId),
+                    stars);
+            }
+
+            int previousBestMoves = GetBestMoves(levelId);
+
+            if (previousBestMoves == 0 || moveCount < previousBestMoves)
+            {
+                PlayerPrefs.SetInt(
+                    GetBestMovesKey(levelId),
+                    moveCount);
+            }
+
+            int highestUnlocked = GetHighestUnlockedLevel();
+
+            PlayerPrefs.SetInt(
+                HighestUnlockedLevelKey,
+                Mathf.Max(highestUnlocked, levelId + 1));
+
             PlayerPrefs.Save();
+        }
+
+        /// <summary>
+        /// Trả số sao cao nhất đã đạt; 0 nghĩa là chưa hoàn thành level.
+        /// </summary>
+        public static int GetBestStars(int levelId)
+        {
+            return Mathf.Clamp(
+                PlayerPrefs.GetInt(GetBestStarsKey(levelId), 0),
+                0,
+                3);
+        }
+
+        /// <summary>
+        /// Trả số nước đi tốt nhất; 0 nghĩa là chưa hoàn thành level.
+        /// </summary>
+        public static int GetBestMoves(int levelId)
+        {
+            return Mathf.Max(
+                0,
+                PlayerPrefs.GetInt(GetBestMovesKey(levelId), 0));
+        }
+
+        /// <summary>
+        /// Tạo PlayerPrefs key riêng cho số sao của từng level.
+        /// </summary>
+        private static string GetBestStarsKey(int levelId)
+        {
+            return $"ColorFactory.Level.{levelId}.BestStars";
+        }
+
+        /// <summary>
+        /// Tạo PlayerPrefs key riêng cho số nước đi của từng level.
+        /// </summary>
+        private static string GetBestMovesKey(int levelId)
+        {
+            return $"ColorFactory.Level.{levelId}.BestMoves";
         }
     }
 }

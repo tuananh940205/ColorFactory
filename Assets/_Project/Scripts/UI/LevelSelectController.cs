@@ -136,9 +136,13 @@ namespace ColorFactory.UI
                 bool isUnlocked =
                     LevelProgressService.IsUnlocked(entry.levelId);
 
+                int bestStars =
+                    LevelProgressService.GetBestStars(entry.levelId);
+
                 levelButton.Setup(
                     entry.levelId,
                     isUnlocked,
+                    bestStars,
                     OpenLevel);
 
                 spawnedButtons.Add(buttonObject);

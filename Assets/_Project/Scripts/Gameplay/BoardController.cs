@@ -235,13 +235,15 @@ namespace ColorFactory.Gameplay
                 return;
 
             levelCompleted = true;
-
-            LevelProgressService.MarkLevelCompleted(
-                gameBootstrap.CurrentLevel.levelId);
-
+            
             int stars = LevelResultCalculator.CalculateStars(
                 gameBootstrap.CurrentLevel,
                 MoveCount);
+
+            LevelProgressService.RecordCompletion(
+                gameBootstrap.CurrentLevel.levelId,
+                MoveCount,
+                stars);
 
             levelCompleteView.Show(MoveCount, stars);
         }

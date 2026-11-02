@@ -13,29 +13,44 @@ namespace ColorFactory.UI
         [SerializeField] private Button button;
         [SerializeField] private TMP_Text levelLabel;
         [SerializeField] private TMP_Text lockLabel;
+        [SerializeField] private TMP_Text starLabel;
 
         /// <summary>
-        /// Gán số level, trạng thái mở khóa và callback khi người chơi bấm.
+        /// Gán trạng thái level, sao tốt nhất và callback khi người chơi bấm.
         /// </summary>
         public void Setup(
             int levelId,
             bool isUnlocked,
+            int bestStars,
             Action<int> onSelected)
         {
             levelLabel.text = $"LEVEL {levelId:00}";
 
-            // Level khóa thì hiện chữ LOCKED.
             lockLabel.gameObject.SetActive(!isUnlocked);
+            starLabel.gameObject.SetActive(isUnlocked);
 
-            // isUnlocked = false sẽ tương đương button.interactable = false.
+            if (isUnlocked)
+                starLabel.text = BuildStarText(bestStars);
+
             button.interactable = isUnlocked;
-
-            // Xóa listener cũ để prefab được tái sử dụng an toàn.
             button.onClick.RemoveAllListeners();
 
-            // Chỉ level mở mới có thể chuyển sang Gameplay scene.
             if (isUnlocked)
                 button.onClick.AddListener(() => onSelected?.Invoke(levelId));
+        }
+
+        /// <summary>
+        /// Hiển thị NEW nếu chưa hoàn thành hoặc tối đa ba sao khi đã hoàn thành.
+        /// </summary>
+        private static string BuildStarText(int stars)
+        {
+            return stars switch
+            {
+                3 => "★ ★ ★",
+                2 => "★ ★ ☆",
+                1 => "★ ☆ ☆",
+                _ => "NEW"
+            };
         }
     }
 }
