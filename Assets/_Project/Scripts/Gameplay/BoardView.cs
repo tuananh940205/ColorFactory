@@ -26,6 +26,7 @@ namespace ColorFactory.Gameplay
         private readonly Dictionary<int, List<GameObject>> toyStacks = new();
 
         private PoolService poolService;
+        private BoardFeedbackView feedbackView;
         private Coroutine hintRoutine;
 
         public bool IsBuilt { get; private set; }
@@ -77,6 +78,7 @@ namespace ColorFactory.Gameplay
                 return;
 
             boardRoot ??= transform;
+            feedbackView ??= GetComponent<BoardFeedbackView>();
             poolService = FindFirstObjectByType<PoolService>();
 
             if (poolService == null || bootstrap.Board == null)
@@ -328,6 +330,15 @@ namespace ColorFactory.Gameplay
         }
 
         /// <summary>
+        /// Phát feedback hoàn thành tại tâm board sau khi toy cuối cùng đã đáp.
+        /// </summary>
+        public void PlayCompletionFeedback()
+        {
+            if (feedbackView != null)
+                feedbackView.PlayCompletion(boardRoot.position);
+        }
+
+        /// <summary>
         /// Di chuyển toy trong world space, rồi parent lại vào khay đích khi kết thúc.
         /// </summary>
         private System.Collections.IEnumerator AnimateMoveRoutine(
@@ -366,6 +377,35 @@ namespace ColorFactory.Gameplay
             // Kết thúc animation: toy trở thành child thật của khay đích.
             movingToy.transform.SetParent(targetTray.ToyContainer, false);
             movingToy.transform.localPosition = destinationLocalPosition;
+
+            ToyView toyView = movingToy.GetComponent<ToyView>();
+            Vector3 toyScale = movingToy.transform.localScale;
+            Vector3 trayScale = targetTray.transform.localScale;
+            const float pulseDuration = 0.12f;
+
+            elapsed = 0f;
+
+            while (elapsed < pulseDuration)
+            {
+                elapsed += Time.deltaTime;
+                float progress = Mathf.Clamp01(elapsed / pulseDuration);
+                float pulse = 1f + Mathf.Sin(progress * Mathf.PI) * 0.12f;
+
+                movingToy.transform.localScale = toyScale * pulse;
+                targetTray.transform.localScale = trayScale * pulse;
+                yield return null;
+            }
+
+            movingToy.transform.localScale = toyScale;
+            targetTray.transform.localScale = trayScale;
+
+            if (feedbackView != null)
+            {
+                Color feedbackColor = toyView != null
+                    ? toyView.CurrentColor
+                    : Color.white;
+                feedbackView.PlayLanding(destinationWorldPosition, feedbackColor);
+            }
 
             onCompleted?.Invoke();
         }

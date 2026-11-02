@@ -7,6 +7,8 @@ namespace ColorFactory.Gameplay
     {
         [SerializeField] private SpriteRenderer spriteRenderer;
 
+        public Color CurrentColor { get; private set; } = Color.white;
+
         private void Awake()
         {
             if (spriteRenderer == null)
@@ -21,7 +23,7 @@ namespace ColorFactory.Gameplay
                 return;
             }
 
-            spriteRenderer.color = color switch
+            CurrentColor = color switch
             {
                 ToyColor.Red => new Color(0.95f, 0.25f, 0.28f),
                 ToyColor.Blue => new Color(0.22f, 0.52f, 0.95f),
@@ -30,6 +32,8 @@ namespace ColorFactory.Gameplay
                 ToyColor.Purple => new Color(0.62f, 0.38f, 0.90f),
                 _ => Color.white
             };
+
+            spriteRenderer.color = CurrentColor;
         }
     }
 }

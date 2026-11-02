@@ -235,6 +235,8 @@ namespace ColorFactory.Gameplay
                 return;
 
             levelCompleted = true;
+
+            boardView.PlayCompletionFeedback();
             
             int stars = LevelResultCalculator.CalculateStars(
                 gameBootstrap.CurrentLevel,
