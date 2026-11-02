@@ -1,3 +1,4 @@
+using ColorFactory.Analytics;
 using ColorFactory.Audio;
 using System;
 using System.Threading;
@@ -41,6 +42,12 @@ namespace ColorFactory.Core
         public LevelData CurrentLevel { get; private set; }
         public BoardModel Board { get; private set; }
         public bool IsReady { get; private set; }
+
+        /// <summary>
+        /// Id level đang chơi, trả 0 khi level chưa load xong để analytics không lỗi.
+        /// </summary>
+        public int CurrentLevelIdOrDefault =>
+            CurrentLevel != null ? CurrentLevel.levelId : 0;
 
         /// <summary>
         /// Được gọi khi toàn bộ data, prefab template và pool đã sẵn sàng.
@@ -147,6 +154,8 @@ namespace ColorFactory.Core
                 CurrentLevel.assets.toyPrefabKey,
                 toyTemplate,
                 initialToyPoolSize);
+
+            Services.Analytics?.Track(new LevelStartedEvent(CurrentLevel.levelId));
 
             IsReady = true;
             Ready?.Invoke(this);

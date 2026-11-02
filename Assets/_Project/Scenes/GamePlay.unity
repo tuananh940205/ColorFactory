@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64fd1b7159d2cfd41b71822708ffbcd9, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.UI.LevelCompleteView
   canvasGroup: {fileID: 1249660}
   gameBootstrap: {fileID: 1400190505}
@@ -533,6 +533,7 @@ GameObject:
   - component: {fileID: 264343128}
   - component: {fileID: 264343130}
   - component: {fileID: 264343131}
+  - component: {fileID: 264343132}
   m_Layer: 0
   m_Name: AddressableService
   m_TagString: Untagged
@@ -577,7 +578,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4b665d1d6474bb8ae7a6d5b11c72084, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Core.SceneFader
   fadeDuration: 0.25
   fadeColor: {r: 0.025, g: 0.07, b: 0.14, a: 1}
@@ -592,12 +593,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2df9b3f393234bd6bfb00ed8171a9f89, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Economy.WalletService
   initialCoins: 30
   hintCost: 3
   undoCost: 2
   completionReward: 10
+--- !u!114 &264343132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264343127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eb0ef2de699c9640a9380854d7bd9de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Analytics.AnalyticsService
+  logToConsole: 1
+  maxBufferedEvents: 200
 --- !u!1 &289320754
 GameObject:
   m_ObjectHideFlags: 0
@@ -2498,7 +2513,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2197df8071e8433c810f1e4a193649de, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Gameplay.BoardFeedbackView
   landingParticleCount: 8
   completionParticleCount: 36

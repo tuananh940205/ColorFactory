@@ -1,3 +1,4 @@
+using ColorFactory.Analytics;
 using ColorFactory.Audio;
 using ColorFactory.Economy;
 
@@ -12,6 +13,24 @@ namespace ColorFactory.Core
         public static SceneFader SceneFader { get; private set; }
         public static IAudioService Audio { get; private set; }
         public static WalletService Wallet { get; private set; }
+        public static IAnalyticsService Analytics { get; private set; }
+
+        /// <summary>
+        /// Đăng ký service analytics khi AnalyticsService persistent được tạo.
+        /// </summary>
+        public static void Register(IAnalyticsService service)
+        {
+            Analytics = service;
+        }
+
+        /// <summary>
+        /// Gỡ service analytics khi AnalyticsService bị hủy.
+        /// </summary>
+        public static void Unregister(IAnalyticsService service)
+        {
+            if (Analytics == service)
+                Analytics = null;
+        }
 
         /// <summary>
         /// Đăng ký ví coin khi WalletService persistent được tạo.

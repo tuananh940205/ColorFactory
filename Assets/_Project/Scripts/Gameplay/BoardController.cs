@@ -1,4 +1,5 @@
 using System;
+using ColorFactory.Analytics;
 using ColorFactory.Audio;
 using ColorFactory.Core;
 using ColorFactory.Economy;
@@ -130,6 +131,12 @@ namespace ColorFactory.Gameplay
                 MoveCount++;
                 MoveCountChanged?.Invoke(MoveCount);
 
+                Services.Analytics?.Track(new MoveMadeEvent(
+                    gameBootstrap.CurrentLevelIdOrDefault,
+                    MoveCount,
+                    fromTrayIndex,
+                    clickedTrayIndex));
+
                 // BoardModel đã đổi state, còn BoardView giờ animate instance hiện có.
                 isAnimatingMove = true;
 
@@ -211,7 +218,10 @@ namespace ColorFactory.Gameplay
             WalletService wallet = Services.Wallet;
 
             if (wallet == null || !wallet.CanAfford(wallet.UndoCost))
+            {
+                TrackBoosterFailure(BoosterType.Undo, wallet);
                 return false;
+            }
 
             ClearSelection();
 
@@ -224,6 +234,10 @@ namespace ColorFactory.Gameplay
 
             MoveCount = Mathf.Max(0, MoveCount - 1);
             MoveCountChanged?.Invoke(MoveCount);
+
+            Services.Analytics?.Track(new UndoUsedEvent(
+                gameBootstrap.CurrentLevelIdOrDefault,
+                MoveCount));
 
             // Khi Undo, toy di chuyển ngược từ khay đích cũ về khay nguồn cũ.
             isAnimatingMove = true;
@@ -249,7 +263,10 @@ namespace ColorFactory.Gameplay
             WalletService wallet = Services.Wallet;
 
             if (wallet == null || !wallet.CanAfford(wallet.HintCost))
+            {
+                TrackBoosterFailure(BoosterType.Hint, wallet);
                 return;
+            }
 
             ClearSelection();
 
@@ -260,7 +277,26 @@ namespace ColorFactory.Gameplay
 
                 // Hint chỉ bị tính phí sau khi đã hiển thị nước đi hợp lệ.
                 wallet.TrySpend(wallet.HintCost);
+
+                Services.Analytics?.Track(new HintUsedEvent(
+                    gameBootstrap.CurrentLevelIdOrDefault,
+                    MoveCount));
             }
+        }
+
+        /// <summary>
+        /// Ghi nhận booster bị từ chối, kèm lý do thiếu ví hoặc thiếu coin.
+        /// </summary>
+        private void TrackBoosterFailure(BoosterType booster, WalletService wallet)
+        {
+            BoosterFailureReason reason = wallet == null
+                ? BoosterFailureReason.WalletUnavailable
+                : BoosterFailureReason.InsufficientCoins;
+
+            Services.Analytics?.Track(new BoosterFailedEvent(
+                gameBootstrap.CurrentLevelIdOrDefault,
+                booster,
+                reason));
         }
         
         /// <summary>
@@ -288,7 +324,14 @@ namespace ColorFactory.Gameplay
                 MoveCount,
                 stars);
 
-            Services.Wallet?.Reward(Services.Wallet.CompletionReward);
+            int coinReward = Services.Wallet?.CompletionReward ?? 0;
+            Services.Wallet?.Reward(coinReward);
+
+            Services.Analytics?.Track(new LevelWonEvent(
+                gameBootstrap.CurrentLevelIdOrDefault,
+                MoveCount,
+                stars,
+                coinReward));
 
             levelCompleteView.Show(
                 MoveCount,

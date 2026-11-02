@@ -1,3 +1,4 @@
+using ColorFactory.Analytics;
 using ColorFactory.Audio;
 using System;
 using System.Collections.Generic;
@@ -163,6 +164,7 @@ namespace ColorFactory.UI
                 () =>
                 {
                     Services.Audio?.Play(SfxType.Button);
+                    Services.Analytics?.Track(new LevelSelectedEvent(levelId));
                     LevelSession.RequestLevel(levelId);
                 });
         }

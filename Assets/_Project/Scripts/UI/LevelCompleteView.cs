@@ -1,3 +1,4 @@
+using ColorFactory.Analytics;
 using ColorFactory.Audio;
 using ColorFactory.Core;
 using TMPro;
@@ -58,8 +59,13 @@ namespace ColorFactory.UI
         /// </summary>
         public void RestartLevel()
         {
-            Services.SceneFader?.TryReloadActiveScene(
-                () => Services.Audio?.Play(SfxType.Button));
+            int levelId = gameBootstrap.CurrentLevelIdOrDefault;
+
+            Services.SceneFader?.TryReloadActiveScene(() =>
+            {
+                Services.Audio?.Play(SfxType.Button);
+                Services.Analytics?.Track(new RestartRequestedEvent(levelId));
+            });
         }
         
         /// <summary>

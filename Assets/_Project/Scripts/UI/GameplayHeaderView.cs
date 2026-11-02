@@ -1,3 +1,4 @@
+using ColorFactory.Analytics;
 using ColorFactory.Audio;
 using System;
 using ColorFactory.Core;
@@ -157,10 +158,15 @@ namespace ColorFactory.UI
         /// </summary>
         private void RestartCurrentLevel()
         {
-            Services.SceneFader?.TryReloadActiveScene(
-                () => Services.Audio?.Play(SfxType.Button));
+            int levelId = gameBootstrap.CurrentLevelIdOrDefault;
+
+            Services.SceneFader?.TryReloadActiveScene(() =>
+            {
+                Services.Audio?.Play(SfxType.Button);
+                Services.Analytics?.Track(new RestartRequestedEvent(levelId));
+            });
         }
-        
+
         /// <summary>
         /// Gọi BoardController hoàn tác nước đi gần nhất.
         /// UI tự cập nhật qua MoveCountChanged.

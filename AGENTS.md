@@ -7,6 +7,7 @@
 3. Thực hiện trọn vẹn phạm vi bài đó: code, asset nếu được yêu cầu, Unity Editor setup, test và cập nhật progress.
 4. Không thực hiện nội dung của bài tiếp theo khi chưa được người dùng yêu cầu rõ ràng.
 5. Không nói bài đã pass nếu chưa chạy được validation khả dụng; nêu rõ phần nào cần người dùng kiểm tra trong Unity Editor.
+6. Tóm tắt những thay đổi có liên quan trực tiếp đến trò chơi sau khi công việc hoàn tất
 
 ## Unity và kiến trúc bắt buộc
 
