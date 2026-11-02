@@ -18,9 +18,11 @@ namespace ColorFactory.Core
         [SerializeField] private AddressableService addressableService;
         [SerializeField] private PoolService poolService;
 
-        [Header("Level")]
-        [Tooltip("Addressables address chính xác của LevelData.")]
-        [SerializeField] private string levelKey = "Level_001";
+        [Header("Level Selection")]
+        [SerializeField] private string levelCatalogKey = "ColorFactoryLevelCatalog";
+        [SerializeField, Min(1)] private int fallbackLevelId = 1;
+
+        private LevelCatalog levelCatalog;
         [SerializeField, Min(0)] private int initialTrayPoolSize = 6;
         [SerializeField, Min(0)] private int initialToyPoolSize = 24;
 
@@ -84,6 +86,24 @@ namespace ColorFactory.Core
         private async Task InitializeAsync(CancellationToken cancellationToken)
         {
             assetScope = addressableService.CreateSceneScope(gameObject.scene.name);
+
+            // Load catalog trước để chuyển level bằng id thay vì hard-code key.
+            levelCatalog = await assetScope.LoadAsync<LevelCatalog>(
+                levelCatalogKey,
+                cancellationToken);
+
+            int requestedLevelId =
+                LevelSession.ConsumeRequestedLevelOrDefault(fallbackLevelId);
+
+            // Không cho load level bị khóa bằng request cũ hoặc thao tác ngoài ý muốn.
+            if (!LevelProgressService.IsUnlocked(requestedLevelId))
+                requestedLevelId = fallbackLevelId;
+
+            if (!levelCatalog.TryGetLevelKey(requestedLevelId, out string levelKey))
+            {
+                throw new InvalidOperationException(
+                    $"Level {requestedLevelId} is missing from LevelCatalog.");
+            }
 
             CurrentLevel = await levelRepository.LoadAsync(
                 levelKey,
@@ -185,6 +205,36 @@ namespace ColorFactory.Core
             lifetimeCancellation = null;
             Board = null;
             CurrentLevel = null;
+        }
+        
+        /// <summary>
+        /// Kiểm tra catalog có level kế tiếp hợp lệ và đã được mở khóa hay không.
+        /// </summary>
+        public bool CanGoToNextLevel()
+        {
+            return CurrentLevel != null &&
+                   levelCatalog != null &&
+                   levelCatalog.TryGetNextLevelId(
+                       CurrentLevel.levelId,
+                       out int nextLevelId) &&
+                   LevelProgressService.IsUnlocked(nextLevelId);
+        }
+
+        /// <summary>
+        /// Yêu cầu load level kế tiếp rồi tải lại scene Gameplay.
+        /// </summary>
+        public void GoToNextLevel()
+        {
+            if (!CanGoToNextLevel())
+                return;
+
+            levelCatalog.TryGetNextLevelId(
+                CurrentLevel.levelId,
+                out int nextLevelId);
+
+            LevelSession.RequestLevel(nextLevelId);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(
+                gameObject.scene.buildIndex);
         }
     }
 }

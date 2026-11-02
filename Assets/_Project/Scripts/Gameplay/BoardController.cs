@@ -1,5 +1,6 @@
 using System;
 using ColorFactory.Core;
+using ColorFactory.Levels;
 using ColorFactory.UI;
 using UnityEngine;
 
@@ -124,6 +125,10 @@ namespace ColorFactory.Gameplay
                     // Khóa input trước khi hiện panel hoàn thành.
                     levelCompleted = true;
                     Debug.Log("Level completed!");
+                    
+                    // Lưu tiến độ trước khi cho phép nút Next Level xuất hiện.
+                    LevelProgressService.MarkLevelCompleted(
+                        gameBootstrap.CurrentLevel.levelId);
 
                     if (levelCompleteView != null)
                         levelCompleteView.Show();

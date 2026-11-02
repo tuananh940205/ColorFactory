@@ -1,5 +1,7 @@
+using ColorFactory.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace ColorFactory.UI
 {
@@ -9,6 +11,8 @@ namespace ColorFactory.UI
     public sealed class LevelCompleteView : MonoBehaviour
     {
         [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private GameBootstrap gameBootstrap;
+        [SerializeField] private Button nextLevelButton;
 
         /// <summary>
         /// Ẩn panel khi scene vừa bắt đầu.
@@ -26,6 +30,10 @@ namespace ColorFactory.UI
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
+            // Chỉ bật Next khi catalog thật sự có level kế tiếp.
+            nextLevelButton.interactable =
+                gameBootstrap != null &&
+                gameBootstrap.CanGoToNextLevel();
         }
 
         /// <summary>
@@ -44,6 +52,14 @@ namespace ColorFactory.UI
         public void RestartLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+        /// <summary>
+        /// Chuyển sang level kế tiếp đã được mở khóa.
+        /// </summary>
+        public void GoToNextLevel()
+        {
+            gameBootstrap.GoToNextLevel();
         }
     }
 }
