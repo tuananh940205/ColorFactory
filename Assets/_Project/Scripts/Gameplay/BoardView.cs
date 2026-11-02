@@ -13,7 +13,11 @@ namespace ColorFactory.Gameplay
     {
         [SerializeField] private GameBootstrap gameBootstrap;
         [SerializeField] private Transform boardRoot;
-        [SerializeField] private float traySpacing = 3f;
+        [Header("Responsive Tray Layout")]
+        [SerializeField, Min(1)] private int maximumColumns = 3;
+        [SerializeField] private float trayHorizontalSpacing = 1.9f;
+        [SerializeField] private float trayVerticalSpacing = 3.1f;
+        [SerializeField] private float boardCenterLocalY = -0.5f;
 
         private readonly Dictionary<int, TrayView> trayViews = new();
         private readonly List<GameObject> trayInstances = new();
@@ -79,17 +83,16 @@ namespace ColorFactory.Gameplay
                 return;
             }
 
-            float firstTrayX =
-                -((bootstrap.Board.TrayCount - 1) * traySpacing) * 0.5f;
-
             for (int index = 0; index < bootstrap.Board.TrayCount; index++)
             {
                 GameObject trayObject =
                     poolService.Get(bootstrap.CurrentLevel.assets.trayPrefabKey);
 
                 trayObject.transform.SetParent(boardRoot, false);
-                trayObject.transform.localPosition =
-                    new Vector3(firstTrayX + index * traySpacing, 0f, 0f);
+                // Tự xếp khay thành nhiều hàng khi level có nhiều hơn ba khay.
+                trayObject.transform.localPosition = GetTrayLocalPosition(
+                    index,
+                    bootstrap.Board.TrayCount);
 
                 TrayView trayView = trayObject.GetComponent<TrayView>();
 
@@ -244,6 +247,35 @@ namespace ColorFactory.Gameplay
                 target.SetHint(false);
 
             hintRoutine = null;
+        }
+        
+        /// <summary>
+        /// Tính vị trí local của một khay theo grid responsive.
+        /// Mỗi hàng có tối đa maximumColumns khay và luôn được căn giữa.
+        /// </summary>
+        private Vector3 GetTrayLocalPosition(int trayIndex, int totalTrayCount)
+        {
+            int columnCount = Mathf.Min(maximumColumns, totalTrayCount);
+            int rowCount = Mathf.CeilToInt(
+                totalTrayCount / (float)columnCount);
+
+            int rowIndex = trayIndex / columnCount;
+            int columnIndex = trayIndex % columnCount;
+
+            // Hàng cuối có thể ít khay hơn, ví dụ Level 02 là hàng 3 + 2.
+            int firstIndexInRow = rowIndex * columnCount;
+            int itemsInCurrentRow = Mathf.Min(
+                columnCount,
+                totalTrayCount - firstIndexInRow);
+
+            float x = (columnIndex - (itemsInCurrentRow - 1) * 0.5f) *
+                      trayHorizontalSpacing;
+
+            float y = boardCenterLocalY +
+                      ((rowCount - 1) * 0.5f - rowIndex) *
+                      trayVerticalSpacing;
+
+            return new Vector3(x, y, 0f);
         }
     }
 }

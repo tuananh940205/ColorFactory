@@ -5,29 +5,37 @@ using UnityEngine;
 
 namespace ColorFactory.Levels
 {
+    /// <summary>
+    /// Dữ liệu một khay, sắp xếp màu từ đáy lên đỉnh.
+    /// </summary>
     [Serializable]
     public sealed class TrayData
     {
-        // Bottom to top.
         public List<ToyColor> colors = new();
     }
 
+    /// <summary>
+    /// Các Addressables key cần cho một level.
+    /// </summary>
     [Serializable]
     public sealed class LevelAssetConfig
     {
-        [Tooltip("Address equals the root GameObject name of the tray prefab.")]
+        [Tooltip("Address phải bằng tên root GameObject của tray prefab.")]
         public string trayPrefabKey;
 
-        [Tooltip("Address equals the root GameObject name of the toy prefab.")]
+        [Tooltip("Address phải bằng tên root GameObject của toy prefab.")]
         public string toyPrefabKey;
 
-        [Tooltip("Optional. Address equals the Sprite asset name.")]
+        [Tooltip("Không bắt buộc. Address của sprite background.")]
         public string backgroundSpriteKey;
 
-        [Tooltip("Optional. Address equals the SpriteAtlas asset name.")]
+        [Tooltip("Không bắt buộc. Address của SpriteAtlas gameplay.")]
         public string gameplaySpriteAtlasKey;
     }
 
+    /// <summary>
+    /// ScriptableObject chứa cấu hình gameplay và asset key của một level.
+    /// </summary>
     [CreateAssetMenu(
         fileName = "Level_001",
         menuName = "Color Factory/Level Data")]
@@ -39,6 +47,9 @@ namespace ColorFactory.Levels
         public LevelAssetConfig assets = new();
         public List<TrayData> trays = new();
 
+        /// <summary>
+        /// Kiểm tra toàn bộ dữ liệu trước khi tạo BoardModel.
+        /// </summary>
         public void ValidateOrThrow()
         {
             if (trayCapacity < 1)
@@ -52,6 +63,8 @@ namespace ColorFactory.Levels
             ValidateRequiredKey(assets.trayPrefabKey, "Tray Prefab Key");
             ValidateRequiredKey(assets.toyPrefabKey, "Toy Prefab Key");
 
+            var colorCounts = new Dictionary<ToyColor, int>();
+
             foreach (TrayData tray in trays)
             {
                 if (tray?.colors == null || tray.colors.Count > trayCapacity)
@@ -59,16 +72,59 @@ namespace ColorFactory.Levels
                     throw new InvalidOperationException(
                         $"{name}: a tray has invalid color data.");
                 }
+
+                foreach (ToyColor color in tray.colors)
+                {
+                    colorCounts.TryGetValue(color, out int currentCount);
+                    colorCounts[color] = currentCount + 1;
+                }
+            }
+
+            ValidateColorCountsOrThrow(colorCounts);
+        }
+
+        /// <summary>
+        /// Bảo đảm mỗi màu có đúng số toy bằng sức chứa một khay.
+        /// </summary>
+        private void ValidateColorCountsOrThrow(
+            IReadOnlyDictionary<ToyColor, int> colorCounts)
+        {
+            if (colorCounts.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    $"{name}: level must contain at least one toy color.");
+            }
+
+            foreach ((ToyColor color, int count) in colorCounts)
+            {
+                if (count != trayCapacity)
+                {
+                    throw new InvalidOperationException(
+                        $"{name}: {color} has {count} toys; " +
+                        $"it must have exactly {trayCapacity}.");
+                }
+            }
+
+            // Ít nhất một khay trống giúp level chưa hoàn thành có không gian di chuyển.
+            if (trays.Count < colorCounts.Count + 1)
+            {
+                throw new InvalidOperationException(
+                    $"{name}: add at least one empty tray.");
             }
         }
 
-        private static void ValidateRequiredKey(string key, string fieldName)
+        /// <summary>
+        /// Kiểm tra key bắt buộc không rỗng và không có khoảng trắng thừa.
+        /// </summary>
+        private static void ValidateRequiredKey(
+            string key,
+            string fieldName)
         {
             if (string.IsNullOrWhiteSpace(key) ||
                 !string.Equals(key, key.Trim(), StringComparison.Ordinal))
             {
                 throw new InvalidOperationException(
-                    $"{key}-{fieldName} must be a non-empty exact Addressables name.");
+                    $"{fieldName} must be a non-empty exact Addressables name.");
             }
         }
     }
