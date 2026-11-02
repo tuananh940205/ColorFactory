@@ -14,7 +14,10 @@ namespace ColorFactory.Gameplay
         [SerializeField] private float firstToyLocalY = -1.1f;
         [SerializeField] private float toySpacing = 0.7f;
         [SerializeField] private Color selectedColor = new(1f, 0.82f, 0.2f);
+        [SerializeField] private Color hintColor = new(0.28f, 0.88f, 0.62f);
 
+        private bool isSelected;
+        private bool isHinted;
         private Color normalColor = Color.white;
 
         public int TrayIndex { get; private set; }
@@ -63,12 +66,12 @@ namespace ColorFactory.Gameplay
         }
 
         /// <summary>
-        /// Đổi màu khay để phản hồi trạng thái được người chơi chọn.
+        /// Bật hoặc tắt highlight khay nguồn do người chơi chọn.
         /// </summary>
         public void SetSelected(bool selected)
         {
-            if (trayRenderer != null)
-                trayRenderer.color = selected ? selectedColor : normalColor;
+            isSelected = selected;
+            RefreshColor();
         }
 
         /// <summary>
@@ -77,6 +80,31 @@ namespace ColorFactory.Gameplay
         public void OnPointerClick(PointerEventData eventData)
         {
             Clicked?.Invoke(TrayIndex);
+        }
+        
+        /// <summary>
+        /// Bật hoặc tắt highlight xanh cho khay được Hint đề xuất.
+        /// </summary>
+        public void SetHint(bool hinted)
+        {
+            isHinted = hinted;
+            RefreshColor();
+        }
+
+        /// <summary>
+        /// Cập nhật màu hiển thị, trong đó selection ưu tiên hơn hint.
+        /// </summary>
+        private void RefreshColor()
+        {
+            if (trayRenderer == null)
+                return;
+
+            if (isSelected)
+                trayRenderer.color = selectedColor;
+            else if (isHinted)
+                trayRenderer.color = hintColor;
+            else
+                trayRenderer.color = normalColor;
         }
     }
 }

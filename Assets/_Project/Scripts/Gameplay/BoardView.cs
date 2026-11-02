@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using ColorFactory.Core;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace ColorFactory.Gameplay
         private readonly List<GameObject> toyInstances = new();
 
         private PoolService poolService;
+        private Coroutine hintRoutine;
 
         public bool IsBuilt { get; private set; }
 
@@ -205,6 +207,43 @@ namespace ColorFactory.Gameplay
             trayInstances.Clear();
             trayViews.Clear();
             IsBuilt = false;
+        }
+        
+        /// <summary>
+        /// Hiển thị tạm thời hai khay mà HintSolver đề xuất.
+        /// Khay nguồn và đích cùng sáng màu xanh.
+        /// </summary>
+        public void ShowHint(int from, int to)
+        {
+            if (!IsBuilt)
+                return;
+
+            if (hintRoutine != null)
+                StopCoroutine(hintRoutine);
+
+            hintRoutine = StartCoroutine(ShowHintRoutine(from, to));
+        }
+
+        /// <summary>
+        /// Bật highlight, chờ ngắn rồi trả khay về màu bình thường.
+        /// </summary>
+        private IEnumerator ShowHintRoutine(int from, int to)
+        {
+            if (TryGetTrayView(from, out TrayView source))
+                source.SetHint(true);
+
+            if (TryGetTrayView(to, out TrayView target))
+                target.SetHint(true);
+
+            yield return new WaitForSeconds(0.9f);
+
+            if (source != null)
+                source.SetHint(false);
+
+            if (target != null)
+                target.SetHint(false);
+
+            hintRoutine = null;
         }
     }
 }

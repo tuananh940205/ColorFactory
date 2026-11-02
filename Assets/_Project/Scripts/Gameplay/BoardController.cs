@@ -193,5 +193,19 @@ namespace ColorFactory.Gameplay
             boardView.Render(gameBootstrap.Board);
             return true;
         }
+        
+        /// <summary>
+        /// Tìm và hiển thị một nước đi hợp lệ mà không tự di chuyển toy.
+        /// </summary>
+        public void RequestHint()
+        {
+            if (!initialized || levelCompleted || gameBootstrap.Board == null)
+                return;
+
+            ClearSelection();
+
+            if (HintSolver.TryFindHint(gameBootstrap.Board, out MoveHint hint))
+                boardView.ShowHint(hint.From, hint.To);
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace ColorFactory.UI
         [SerializeField] private TMP_Text movesText;
         [SerializeField] private Button restartButton;
         [SerializeField] private Button undoButton;
+        [SerializeField] private Button hintButton;
 
         private bool isBound;
 
@@ -44,6 +45,7 @@ namespace ColorFactory.UI
 
             restartButton.onClick.AddListener(RestartCurrentLevel);
             undoButton.onClick.AddListener(UndoLastMove);
+            hintButton.onClick.AddListener(RequestHint);
 
             if (gameBootstrap.IsReady)
                 BindToGameplay();
@@ -67,6 +69,9 @@ namespace ColorFactory.UI
             
             if (undoButton != null)
                 undoButton.onClick.RemoveListener(UndoLastMove);
+            
+            if (hintButton != null)
+                hintButton.onClick.RemoveListener(RequestHint);
         }
 
         /// <summary>
@@ -117,6 +122,14 @@ namespace ColorFactory.UI
         private void UndoLastMove()
         {
             boardController.TryUndoLastMove();
+        }
+        
+        /// <summary>
+        /// Yêu cầu BoardController hiển thị nước đi được HintSolver đề xuất.
+        /// </summary>
+        private void RequestHint()
+        {
+            boardController.RequestHint();
         }
     }
 }
