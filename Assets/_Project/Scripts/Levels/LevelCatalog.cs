@@ -24,7 +24,10 @@ namespace ColorFactory.Levels
     public sealed class LevelCatalog : ScriptableObject
     {
         [SerializeField] private List<LevelCatalogEntry> levels = new();
-
+        /// <summary>
+        /// Danh sách level để UI Level Select tạo button theo catalog.
+        /// </summary>
+        public IReadOnlyList<LevelCatalogEntry> Levels => levels;
         /// <summary>
         /// Tìm Addressables key theo số level.
         /// </summary>

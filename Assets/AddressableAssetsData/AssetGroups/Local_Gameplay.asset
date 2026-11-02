@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Local_Gameplay
   m_GUID: 12f355f75b056664a96af98c5dcceb30
   m_SerializeEntries:
+  - m_GUID: 441b8fb242b238c428c78e5c68700bb8
+    m_Address: LevelSelectButton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 85752ba6c0d6c564d84ed13efbb718c6
     m_Address: TrayPrefab
     m_ReadOnly: 0

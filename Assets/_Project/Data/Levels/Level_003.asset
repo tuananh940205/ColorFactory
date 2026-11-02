@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level_003
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Levels.LevelData
   levelId: 2
-  trayCapacity: 4
+  trayCapacity: 6
   assets:
     trayPrefabKey: TrayPrefab
     toyPrefabKey: ToyPrefab

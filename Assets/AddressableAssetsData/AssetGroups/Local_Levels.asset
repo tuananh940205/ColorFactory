@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Local_Levels
   m_GUID: 285689925d1137944b905ac53edb6b36
   m_SerializeEntries:
+  - m_GUID: 0b77f14402256c5469f8ecc797e365cd
+    m_Address: Level_003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16ab45d0c7713a946bacd666fe96d367
     m_Address: ColorFactoryLevelCatalog
     m_ReadOnly: 0
