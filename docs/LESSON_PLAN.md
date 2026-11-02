@@ -3,6 +3,8 @@
 ## Operating rule
 
 For every lesson, Codex must deliver: complete code changes, required generated/edited assets, exact Unity Editor steps, tests, expected Console result, and `PROGRESS.md` update. It must preserve existing Addressables/pool ownership architecture.
+After operation completed:
+- Describe what you change in scene/prefab/gameobject steps by steps in existing LESSION_$IINDEX_SETUP.md file
 
 ## Bài 20 — Scene fade và polish luồng chuyển scene
 

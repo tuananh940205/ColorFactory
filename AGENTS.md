@@ -45,8 +45,9 @@ Text asset can be loaded by addressable by key
 Data class has readonly field, set data from constructor only
 1 file should define only class/object with the same name as file name
 
-Store these objects in a singleton:
-- services
+Every singleton instance managed by ServiceLocator
+Use Signal instead of placing serialized monobehaviour script object to call methods
+When need to use new signal, define a new class inherit from the needed signal
 
 Only use try-catch in functions when:
 - has CancellationTokenSource

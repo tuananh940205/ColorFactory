@@ -10,11 +10,12 @@
 - [x] Level 01–03, catalog, PlayerPrefs unlock progression, star targets and best-result persistence.
 - [x] Level Select scene and dynamic Addressable level buttons.
 - [x] Bài 20 — Scene fade persistent cho Level Select, restart và next level; chặn request khi fade.
+- [x] Bài 21 — Gameplay SpriteAtlas và Addressables key `GameplayAtlas`.
 - [ ] Verify current move animation and Undo animation after the corresponding lessons are merged.
 
 ## Upcoming
 
-- [ ] Bài 21 through Bài 30 in `LESSON_PLAN.md`.
+- [ ] Bài 22 through Bài 30 in `LESSON_PLAN.md`.
 
 ## Manual regression checklist after every gameplay lesson
 

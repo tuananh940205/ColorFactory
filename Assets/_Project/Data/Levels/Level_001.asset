@@ -18,7 +18,7 @@ MonoBehaviour:
     trayPrefabKey: TrayPrefab
     toyPrefabKey: ToyPrefab
     backgroundSpriteKey: FactoryBackground
-    gameplaySpriteAtlasKey: 
+    gameplaySpriteAtlasKey: GameplayAtlas
   trays:
   - colors: 00000000010000000000000001000000
   - colors: 01000000000000000100000000000000
