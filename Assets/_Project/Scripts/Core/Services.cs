@@ -1,4 +1,5 @@
 using ColorFactory.Audio;
+using ColorFactory.Economy;
 
 namespace ColorFactory.Core
 {
@@ -10,6 +11,24 @@ namespace ColorFactory.Core
         public static AddressableService Addressables { get; private set; }
         public static SceneFader SceneFader { get; private set; }
         public static IAudioService Audio { get; private set; }
+        public static WalletService Wallet { get; private set; }
+
+        /// <summary>
+        /// Đăng ký ví coin khi WalletService persistent được tạo.
+        /// </summary>
+        public static void Register(WalletService service)
+        {
+            Wallet = service;
+        }
+
+        /// <summary>
+        /// Gỡ ví coin khi WalletService persistent bị hủy.
+        /// </summary>
+        public static void Unregister(WalletService service)
+        {
+            if (Wallet == service)
+                Wallet = null;
+        }
 
         /// <summary>
         /// Đăng ký service âm thanh khi AudioService được tạo.

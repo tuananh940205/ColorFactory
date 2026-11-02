@@ -1,6 +1,7 @@
 using System;
 using ColorFactory.Audio;
 using ColorFactory.Core;
+using ColorFactory.Economy;
 using ColorFactory.Levels;
 using ColorFactory.UI;
 using UnityEngine;
@@ -190,6 +191,16 @@ namespace ColorFactory.Gameplay
             gameBootstrap.Board.CanUndo;
 
         /// <summary>
+        /// Kiểm tra gameplay còn cho phép dùng Hint trước khi HUD xét thêm coin cost.
+        /// </summary>
+        public bool CanRequestHint =>
+            initialized &&
+            !levelCompleted &&
+            !isAnimatingMove &&
+            gameBootstrap != null &&
+            gameBootstrap.Board != null;
+
+        /// <summary>
         /// Hoàn tác nước đi gần nhất và animate toy bay ngược về khay nguồn cũ.
         /// </summary>
         public bool TryUndoLastMove()
@@ -197,9 +208,18 @@ namespace ColorFactory.Gameplay
             if (!initialized || !CanUndo)
                 return false;
 
+            WalletService wallet = Services.Wallet;
+
+            if (wallet == null || !wallet.CanAfford(wallet.UndoCost))
+                return false;
+
             ClearSelection();
 
             if (!gameBootstrap.Board.TryUndo(out BoardMove undoneMove))
+                return false;
+
+            // Chỉ trừ coin sau khi BoardModel hoàn tác thật sự thành công.
+            if (!wallet.TrySpend(wallet.UndoCost).IsSuccessful)
                 return false;
 
             MoveCount = Mathf.Max(0, MoveCount - 1);
@@ -223,7 +243,12 @@ namespace ColorFactory.Gameplay
         /// </summary>
         public void RequestHint()
         {
-            if (!initialized || levelCompleted || gameBootstrap.Board == null)
+            if (!CanRequestHint)
+                return;
+
+            WalletService wallet = Services.Wallet;
+
+            if (wallet == null || !wallet.CanAfford(wallet.HintCost))
                 return;
 
             ClearSelection();
@@ -232,6 +257,9 @@ namespace ColorFactory.Gameplay
             {
                 Services.Audio?.Play(SfxType.Hint);
                 boardView.ShowHint(hint.From, hint.To);
+
+                // Hint chỉ bị tính phí sau khi đã hiển thị nước đi hợp lệ.
+                wallet.TrySpend(wallet.HintCost);
             }
         }
         
@@ -260,7 +288,12 @@ namespace ColorFactory.Gameplay
                 MoveCount,
                 stars);
 
-            levelCompleteView.Show(MoveCount, stars);
+            Services.Wallet?.Reward(Services.Wallet.CompletionReward);
+
+            levelCompleteView.Show(
+                MoveCount,
+                stars,
+                Services.Wallet?.CompletionReward ?? 0);
         }
         
         /// <summary>

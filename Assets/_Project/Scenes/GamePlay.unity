@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 264343129}
   - component: {fileID: 264343128}
   - component: {fileID: 264343130}
+  - component: {fileID: 264343131}
   m_Layer: 0
   m_Name: AddressableService
   m_TagString: Untagged
@@ -581,6 +582,22 @@ MonoBehaviour:
   fadeDuration: 0.25
   fadeColor: {r: 0.025, g: 0.07, b: 0.14, a: 1}
   sortingOrder: 1000
+--- !u!114 &264343131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264343127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2df9b3f393234bd6bfb00ed8171a9f89, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Economy.WalletService
+  initialCoins: 30
+  hintCost: 3
+  undoCost: 2
+  completionReward: 10
 --- !u!1 &289320754
 GameObject:
   m_ObjectHideFlags: 0

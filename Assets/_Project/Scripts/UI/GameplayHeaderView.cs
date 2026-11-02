@@ -1,6 +1,7 @@
 using ColorFactory.Audio;
 using System;
 using ColorFactory.Core;
+using ColorFactory.Economy;
 using ColorFactory.Gameplay;
 using TMPro;
 using UnityEngine;
@@ -25,6 +26,7 @@ namespace ColorFactory.UI
         [SerializeField] private Button hintButton;
 
         private bool isBound;
+        private WalletService walletService;
 
         /// <summary>
         /// Tìm các service cần thiết, đăng ký nút restart
@@ -34,6 +36,7 @@ namespace ColorFactory.UI
         {
             gameBootstrap ??= FindFirstObjectByType<GameBootstrap>();
             boardController ??= FindFirstObjectByType<BoardController>();
+            walletService = Services.Wallet;
 
             if (gameBootstrap == null || boardController == null)
             {
@@ -63,6 +66,9 @@ namespace ColorFactory.UI
 
             if (boardController != null)
                 boardController.MoveCountChanged -= UpdateMovesText;
+
+            if (walletService != null)
+                walletService.BalanceChanged -= UpdateWalletText;
 
             if (restartButton != null)
                 restartButton.onClick.RemoveListener(RestartCurrentLevel);
@@ -94,7 +100,12 @@ namespace ColorFactory.UI
 
             levelText.text = $"LEVEL {gameBootstrap.CurrentLevel.levelId:00}";
             boardController.MoveCountChanged += UpdateMovesText;
+
+            if (walletService != null)
+                walletService.BalanceChanged += UpdateWalletText;
             UpdateMovesText(boardController.MoveCount);
+            UpdateWalletText(walletService?.Coins ?? 0);
+            UpdateBoosterLabels();
         }
 
         /// <summary>
@@ -102,9 +113,43 @@ namespace ColorFactory.UI
         /// </summary>
         private void UpdateMovesText(int moveCount)
         {
-            movesText.text = $"MOVES: {moveCount}";
+            movesText.text = $"MOVES: {moveCount}\nCOINS: {walletService?.Coins ?? 0}";
             // Undo chỉ bật khi có ít nhất một nước đi hợp lệ trong lịch sử.
-            undoButton.interactable = boardController.CanUndo;
+            undoButton.interactable = boardController.CanUndo &&
+                                      walletService != null &&
+                                      walletService.CanAfford(walletService.UndoCost);
+        }
+
+        /// <summary>
+        /// Cập nhật coin HUD và trạng thái booster sau mỗi giao dịch ví.
+        /// </summary>
+        private void UpdateWalletText(int coins)
+        {
+            movesText.text = $"MOVES: {boardController.MoveCount}\nCOINS: {coins}";
+            undoButton.interactable = boardController.CanUndo &&
+                                      walletService != null &&
+                                      walletService.CanAfford(walletService.UndoCost);
+            hintButton.interactable = boardController.CanRequestHint &&
+                                      walletService != null &&
+                                      walletService.CanAfford(walletService.HintCost);
+        }
+
+        /// <summary>
+        /// Hiển thị coin cost ngay trên nhãn button để người chơi biết trước khi dùng.
+        /// </summary>
+        private void UpdateBoosterLabels()
+        {
+            if (walletService == null)
+                return;
+
+            TMP_Text undoLabel = undoButton.GetComponentInChildren<TMP_Text>();
+            TMP_Text hintLabel = hintButton.GetComponentInChildren<TMP_Text>();
+
+            if (undoLabel != null)
+                undoLabel.text = $"UNDO\n{walletService.UndoCost} COINS";
+
+            if (hintLabel != null)
+                hintLabel.text = $"HINT\n{walletService.HintCost} COINS";
         }
 
         /// <summary>

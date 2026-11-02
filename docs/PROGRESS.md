@@ -12,12 +12,13 @@
 - [x] Bài 20 — Scene fade persistent cho Level Select, restart và next level; chặn request khi fade.
 - [x] Bài 21 — Gameplay SpriteAtlas và Addressables key `GameplayAtlas`.
 - [x] Bài 22 — Pulse toy/khay, sparkle built-in tái sử dụng và khóa input trong lúc animate.
+- [x] Bài 24 — Wallet coin mock cho Hint/Undo, reward hoàn thành và HUD/cost label.
 - [ ] Verify current move animation and Undo animation after the corresponding lessons are merged.
 - [ ] Bài 23 — Audio feedback: code `AudioService`/`SfxKeyMap`/`AudioToggleButton`, placeholder SFX và `LESSON_23_SETUP.md` đã thêm; chờ kiểm thử trong Unity Editor.
 
 ## Upcoming
 
-- [ ] Bài 24 through Bài 30 in `LESSON_PLAN.md`.
+- [ ] Bài 25 through Bài 30 in `LESSON_PLAN.md`.
 
 ## Manual regression checklist after every gameplay lesson
 

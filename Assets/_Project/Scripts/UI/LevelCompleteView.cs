@@ -28,9 +28,10 @@ namespace ColorFactory.UI
         /// <summary>
         /// Hiển thị kết quả level gồm số nước đi và số sao đạt được.
         /// </summary>
-        public void Show(int moveCount, int stars)
+        public void Show(int moveCount, int stars, int reward)
         {
-            movesSummaryText.text = $"COMPLETED IN {moveCount} MOVES";
+            movesSummaryText.text =
+                $"COMPLETED IN {moveCount} MOVES\nREWARD: +{reward} COINS";
             starsText.text = BuildStarText(stars);
 
             canvasGroup.alpha = 1f;
