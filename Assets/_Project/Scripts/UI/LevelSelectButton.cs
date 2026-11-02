@@ -14,7 +14,8 @@ namespace ColorFactory.UI
         [SerializeField] private TMP_Text levelLabel;
         [SerializeField] private TMP_Text lockLabel;
         [SerializeField] private TMP_Text starLabel;
-
+        [SerializeField] private TMP_Text bestMovesLabel;
+        
         /// <summary>
         /// Gán trạng thái level, sao tốt nhất và callback khi người chơi bấm.
         /// </summary>
@@ -22,15 +23,23 @@ namespace ColorFactory.UI
             int levelId,
             bool isUnlocked,
             int bestStars,
+            int bestMoves,
             Action<int> onSelected)
         {
             levelLabel.text = $"LEVEL {levelId:00}";
 
             lockLabel.gameObject.SetActive(!isUnlocked);
             starLabel.gameObject.SetActive(isUnlocked);
+            bestMovesLabel.gameObject.SetActive(isUnlocked);
 
             if (isUnlocked)
+            {
                 starLabel.text = BuildStarText(bestStars);
+
+                bestMovesLabel.text = bestMoves > 0
+                    ? $"BEST: {bestMoves} MOVES"
+                    : "NOT COMPLETED";
+            }
 
             button.interactable = isUnlocked;
             button.onClick.RemoveAllListeners();

@@ -138,11 +138,15 @@ namespace ColorFactory.UI
 
                 int bestStars =
                     LevelProgressService.GetBestStars(entry.levelId);
+                
+                int bestMoves =
+                    LevelProgressService.GetBestMoves(entry.levelId);
 
                 levelButton.Setup(
                     entry.levelId,
                     isUnlocked,
                     bestStars,
+                    bestMoves,
                     OpenLevel);
 
                 spawnedButtons.Add(buttonObject);
