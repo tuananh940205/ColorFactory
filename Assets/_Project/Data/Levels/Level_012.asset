@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b6e4591c64a5ae4bbd77fa37b0c75cf, type: 3}
+  m_Name: Level_012
+  m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Levels.LevelData
+  levelId: 12
+  trayCapacity: 4
+  threeStarMoveTarget: 18
+  twoStarMoveTarget: 24
+  assets:
+    trayPrefabKey: TrayPrefab
+    toyPrefabKey: ToyPrefab
+    backgroundSpriteKey: FactoryBackground
+    gameplaySpriteAtlasKey: GameplayAtlas
+  trays:
+  - colors: 04000000010000000200000004000000
+  - colors: 03000000030000000300000000000000
+  - colors: 00000000030000000200000004000000
+  - colors: 
+  - colors: 01000000010000000100000004000000
+  - colors: 02000000000000000000000002000000
