@@ -44,7 +44,7 @@ FactoryBackground          Background Sprite key
 
 ```text
 Assets/_Project/Scenes/LevelSelect.unity
-Assets/_Project/Scenes/Gameplay.unity
+Assets/_Project/Scenes/GamePlay.unity
 ```
 
-`LevelSelect` should be first in Build Profiles Scene List, then `Gameplay`.
+`LevelSelect` should be first in Build Profiles Scene List, then `GamePlay`.
