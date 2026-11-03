@@ -22,6 +22,38 @@ namespace ColorFactory.Core
 
         public bool IsShuttingDown => shuttingDown;
 
+        /// <summary>
+        /// Số instance đang được dùng (active) trên mọi pool; dùng cho diagnostic và memory report.
+        /// </summary>
+        public int ActiveCount
+        {
+            get
+            {
+                int count = 0;
+
+                foreach (Pool pool in pools.Values)
+                    count += pool.Active.Count;
+
+                return count;
+            }
+        }
+
+        /// <summary>
+        /// Số instance đang nằm trong kho chờ (inactive) trên mọi pool; dùng cho diagnostic và memory report.
+        /// </summary>
+        public int InactiveCount
+        {
+            get
+            {
+                int count = 0;
+
+                foreach (Pool pool in pools.Values)
+                    count += pool.Inactive.Count;
+
+                return count;
+            }
+        }
+
         public void CreatePool(string key, GameObject template, int initialSize)
         {
             if (shuttingDown)
