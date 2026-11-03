@@ -49,9 +49,14 @@ Data class has readonly field, set data from constructor only
 Every singleton instance managed by ServiceLocator
 Use Signal instead of placing serialized monobehaviour script object to call methods
 When need to use new signal, define a new class inherit from the needed signal
+XML comments should be placed above the atrribute tags of the member definition
 
 Only use try-catch in functions when:
 - has CancellationTokenSource
+- Test method that expects an exception: wrap the whole call (start the Task and await it) in try-catch, catch only the predicted exception type, keep a timeout so the test cannot hang
+- Service methods that return Task must wrap every failure in the documented exception type, including synchronous errors from Addressables
+- Test that triggers an exception logged by Unity or a library: try-catch cannot intercept a log, so declare it with LogAssert.Expect(<LogType as shown in the test failure output, e.g. Error>, <exact message regex>) and do not ignore all failing messages
+
 
 Use one static class object as service locator to store all singletons
 Do not use static class or static instance for singleton items

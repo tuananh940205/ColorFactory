@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="41" result="Passed" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.0637152">
+  <test-suite type="TestSuite" id="1000" name="ColorFactory" fullname="ColorFactory" runstate="Runnable" testcasecount="41" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.063715" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1049" name="ColorFactory.Tests.EditMode.dll" fullname="C:/Users/anhtdt/AppData/Local/Temp/claude/D--Repositories-PuzzlePortfolio-ColorFactory/207635e7-c5a2-4fcc-8171-ec95e9b471f1/scratchpad/ColorFactoryTest/Library/ScriptAssemblies/ColorFactory.Tests.EditMode.dll" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.057427" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="45872" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1050" name="ColorFactory" fullname="ColorFactory" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.057183" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1051" name="Tests" fullname="ColorFactory.Tests" runstate="Runnable" testcasecount="40" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.056997" total="40" passed="40" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="BoardModelTests" fullname="ColorFactory.Tests.BoardModelTests" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.031145" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1012" name="Constructor_NonPositiveCapacity_Throws" fullname="ColorFactory.Tests.BoardModelTests.Constructor_NonPositiveCapacity_Throws" methodname="Constructor_NonPositiveCapacity_Throws" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="676116846" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.011938" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="Constructor_NullLevel_Throws" fullname="ColorFactory.Tests.BoardModelTests.Constructor_NullLevel_Throws" methodname="Constructor_NullLevel_Throws" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="289813363" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000301" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1010" name="Constructor_TrayOverCapacity_Throws" fullname="ColorFactory.Tests.BoardModelTests.Constructor_TrayOverCapacity_Throws" methodname="Constructor_TrayOverCapacity_Throws" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1154875536" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000846" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1009" name="IsCompleted_SolvedAndUnsolvedBoards" fullname="ColorFactory.Tests.BoardModelTests.IsCompleted_SolvedAndUnsolvedBoards" methodname="IsCompleted_SolvedAndUnsolvedBoards" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1126423242" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001483" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1006" name="TryMove_ColorMismatch_ReturnsFalse_AndLeavesBoardUnchanged" fullname="ColorFactory.Tests.BoardModelTests.TryMove_ColorMismatch_ReturnsFalse_AndLeavesBoardUnchanged" methodname="TryMove_ColorMismatch_ReturnsFalse_AndLeavesBoardUnchanged" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1521710905" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.003692" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1004" name="TryMove_FromEmptyTray_ReturnsFalse" fullname="ColorFactory.Tests.BoardModelTests.TryMove_FromEmptyTray_ReturnsFalse" methodname="TryMove_FromEmptyTray_ReturnsFalse" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1077076266" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000154" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="TryMove_OntoFullTray_ReturnsFalse" fullname="ColorFactory.Tests.BoardModelTests.TryMove_OntoFullTray_ReturnsFalse" methodname="TryMove_OntoFullTray_ReturnsFalse" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="982928803" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000144" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="TryMove_OutOfRangeIndex_ReturnsFalse" fullname="ColorFactory.Tests.BoardModelTests.TryMove_OutOfRangeIndex_ReturnsFalse" methodname="TryMove_OutOfRangeIndex_ReturnsFalse" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1121407612" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000241" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="TryMove_SameTray_ReturnsFalse" fullname="ColorFactory.Tests.BoardModelTests.TryMove_SameTray_ReturnsFalse" methodname="TryMove_SameTray_ReturnsFalse" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="160275131" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000608" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1008" name="TryMove_ThenUndo_RestoresBoardAndHistory" fullname="ColorFactory.Tests.BoardModelTests.TryMove_ThenUndo_RestoresBoardAndHistory" methodname="TryMove_ThenUndo_RestoresBoardAndHistory" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1622392907" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000983" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1007" name="TryUndo_EmptyHistory_ReturnsFalse" fullname="ColorFactory.Tests.BoardModelTests.TryUndo_EmptyHistory_ReturnsFalse" methodname="TryUndo_EmptyHistory_ReturnsFalse" classname="ColorFactory.Tests.BoardModelTests" runstate="Runnable" seed="1068707582" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000219" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1013" name="LevelBatchRulesTests" fullname="ColorFactory.Tests.LevelBatchRulesTests" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.006886" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1016" name="CheckCatalog_DuplicateIdOrKey_ReportsError" fullname="ColorFactory.Tests.LevelBatchRulesTests.CheckCatalog_DuplicateIdOrKey_ReportsError" methodname="CheckCatalog_DuplicateIdOrKey_ReportsError" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" seed="1959017824" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000773" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1015" name="CheckCatalog_EmptyOrNull_ReportsError" fullname="ColorFactory.Tests.LevelBatchRulesTests.CheckCatalog_EmptyOrNull_ReportsError" methodname="CheckCatalog_EmptyOrNull_ReportsError" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" seed="1036164391" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001745" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1017" name="CheckCatalog_EmptyOrPaddedKey_ReportsError" fullname="ColorFactory.Tests.LevelBatchRulesTests.CheckCatalog_EmptyOrPaddedKey_ReportsError" methodname="CheckCatalog_EmptyOrPaddedKey_ReportsError" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" seed="1387399001" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000211" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1014" name="CheckCatalog_ValidEntries_NoErrors" fullname="ColorFactory.Tests.LevelBatchRulesTests.CheckCatalog_ValidEntries_NoErrors" methodname="CheckCatalog_ValidEntries_NoErrors" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" seed="1374902921" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000225" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1019" name="CheckLevel_MalformedLevel_ReportsEachProblem" fullname="ColorFactory.Tests.LevelBatchRulesTests.CheckLevel_MalformedLevel_ReportsEachProblem" methodname="CheckLevel_MalformedLevel_ReportsEachProblem" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" seed="1498041983" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.002513" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="CheckLevel_ValidLevel_NoErrors" fullname="ColorFactory.Tests.LevelBatchRulesTests.CheckLevel_ValidLevel_NoErrors" methodname="CheckLevel_ValidLevel_NoErrors" classname="ColorFactory.Tests.LevelBatchRulesTests" runstate="Runnable" seed="395167603" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000165" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1020" name="LevelCatalogTests" fullname="ColorFactory.Tests.LevelCatalogTests" classname="ColorFactory.Tests.LevelCatalogTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.002045" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1023" name="Lookup_EmptyKey_ReturnsFalse" fullname="ColorFactory.Tests.LevelCatalogTests.Lookup_EmptyKey_ReturnsFalse" methodname="Lookup_EmptyKey_ReturnsFalse" classname="ColorFactory.Tests.LevelCatalogTests" runstate="Runnable" seed="373763431" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000893" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="Lookup_FindsKeyAndNextLevel" fullname="ColorFactory.Tests.LevelCatalogTests.Lookup_FindsKeyAndNextLevel" methodname="Lookup_FindsKeyAndNextLevel" classname="ColorFactory.Tests.LevelCatalogTests" runstate="Runnable" seed="1864205218" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000308" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1022" name="Lookup_MissingLevelAndLastLevel_ReturnFalse" fullname="ColorFactory.Tests.LevelCatalogTests.Lookup_MissingLevelAndLastLevel_ReturnFalse" methodname="Lookup_MissingLevelAndLastLevel_ReturnFalse" classname="ColorFactory.Tests.LevelCatalogTests" runstate="Runnable" seed="319628657" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000167" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1024" name="LevelDataValidationTests" fullname="ColorFactory.Tests.LevelDataValidationTests" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.004557" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1026" name="ValidateOrThrow_ColorCountMismatch_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_ColorCountMismatch_Throws" methodname="ValidateOrThrow_ColorCountMismatch_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="1677422026" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001112" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1032" name="ValidateOrThrow_KeyWithWhitespace_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_KeyWithWhitespace_Throws" methodname="ValidateOrThrow_KeyWithWhitespace_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="1318619661" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000224" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1031" name="ValidateOrThrow_MissingTrayPrefabKey_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_MissingTrayPrefabKey_Throws" methodname="ValidateOrThrow_MissingTrayPrefabKey_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="790991062" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000202" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1028" name="ValidateOrThrow_NoSpareTray_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_NoSpareTray_Throws" methodname="ValidateOrThrow_NoSpareTray_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="820922684" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000220" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="ValidateOrThrow_NoToys_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_NoToys_Throws" methodname="ValidateOrThrow_NoToys_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="1314034252" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000248" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1030" name="ValidateOrThrow_ThreeStarTargetAboveTwoStar_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_ThreeStarTargetAboveTwoStar_Throws" methodname="ValidateOrThrow_ThreeStarTargetAboveTwoStar_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="546954817" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000208" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="ValidateOrThrow_TrayOverCapacity_Throws" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_TrayOverCapacity_Throws" methodname="ValidateOrThrow_TrayOverCapacity_Throws" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="289176440" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000215" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1025" name="ValidateOrThrow_ValidLevel_DoesNotThrow" fullname="ColorFactory.Tests.LevelDataValidationTests.ValidateOrThrow_ValidLevel_DoesNotThrow" methodname="ValidateOrThrow_ValidLevel_DoesNotThrow" classname="ColorFactory.Tests.LevelDataValidationTests" runstate="Runnable" seed="1098474481" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000656" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1033" name="LevelProgressServiceTests" fullname="ColorFactory.Tests.LevelProgressServiceTests" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.005054" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1034" name="NewGame_OnlyLevelOneUnlocked_LevelTwoIsLocked" fullname="ColorFactory.Tests.LevelProgressServiceTests.NewGame_OnlyLevelOneUnlocked_LevelTwoIsLocked" methodname="NewGame_OnlyLevelOneUnlocked_LevelTwoIsLocked" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" seed="37167545" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001501" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1037" name="RecordCompletion_ClampsStarsToValidRange" fullname="ColorFactory.Tests.LevelProgressServiceTests.RecordCompletion_ClampsStarsToValidRange" methodname="RecordCompletion_ClampsStarsToValidRange" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" seed="2019756216" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001023" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1036" name="RecordCompletion_KeepsBestStarsAndBestMoves" fullname="ColorFactory.Tests.LevelProgressServiceTests.RecordCompletion_KeepsBestStarsAndBestMoves" methodname="RecordCompletion_KeepsBestStarsAndBestMoves" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" seed="1971497898" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000532" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1038" name="RecordCompletion_ReplayingEarlierLevel_DoesNotLockProgress" fullname="ColorFactory.Tests.LevelProgressServiceTests.RecordCompletion_ReplayingEarlierLevel_DoesNotLockProgress" methodname="RecordCompletion_ReplayingEarlierLevel_DoesNotLockProgress" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" seed="683905164" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000429" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1035" name="RecordCompletion_UnlocksNextLevelOnly" fullname="ColorFactory.Tests.LevelProgressServiceTests.RecordCompletion_UnlocksNextLevelOnly" methodname="RecordCompletion_UnlocksNextLevelOnly" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" seed="636122796" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000371" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="RecordCompletion_ValuesAreStoredInPlayerPrefs" fullname="ColorFactory.Tests.LevelProgressServiceTests.RecordCompletion_ValuesAreStoredInPlayerPrefs" methodname="RecordCompletion_ValuesAreStoredInPlayerPrefs" classname="ColorFactory.Tests.LevelProgressServiceTests" runstate="Runnable" seed="1320157258" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000421" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1040" name="LevelResultCalculatorTests" fullname="ColorFactory.Tests.LevelResultCalculatorTests" classname="ColorFactory.Tests.LevelResultCalculatorTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000594" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1041" name="CalculateStars_BoundaryValues" fullname="ColorFactory.Tests.LevelResultCalculatorTests.CalculateStars_BoundaryValues" methodname="CalculateStars_BoundaryValues" classname="ColorFactory.Tests.LevelResultCalculatorTests" runstate="Runnable" seed="1756793010" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000244" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1042" name="LevelSessionTests" fullname="ColorFactory.Tests.LevelSessionTests" classname="ColorFactory.Tests.LevelSessionTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000770" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1043" name="ConsumeRequestedLevel_UsesRequestOnlyOnce" fullname="ColorFactory.Tests.LevelSessionTests.ConsumeRequestedLevel_UsesRequestOnlyOnce" methodname="ConsumeRequestedLevel_UsesRequestOnlyOnce" classname="ColorFactory.Tests.LevelSessionTests" runstate="Runnable" seed="2117944188" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000246" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="ConsumeRequestedLevel_WithoutRequest_ReturnsFallback" fullname="ColorFactory.Tests.LevelSessionTests.ConsumeRequestedLevel_WithoutRequest_ReturnsFallback" methodname="ConsumeRequestedLevel_WithoutRequest_ReturnsFallback" classname="ColorFactory.Tests.LevelSessionTests" runstate="Runnable" seed="1712721704" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000098" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1045" name="PoolServiceTests" fullname="ColorFactory.Tests.PoolServiceTests" classname="ColorFactory.Tests.PoolServiceTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.004705" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1047" name="Get_UnknownPool_Throws" fullname="ColorFactory.Tests.PoolServiceTests.Get_UnknownPool_Throws" methodname="Get_UnknownPool_Throws" classname="ColorFactory.Tests.PoolServiceTests" runstate="Runnable" seed="1009076203" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001168" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="Return_ThenGet_ReusesSameInstance" fullname="ColorFactory.Tests.PoolServiceTests.Return_ThenGet_ReusesSameInstance" methodname="Return_ThenGet_ReusesSameInstance" classname="ColorFactory.Tests.PoolServiceTests" runstate="Runnable" seed="1219165629" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.002485" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1048" name="Shutdown_RejectsGetAndCreate" fullname="ColorFactory.Tests.PoolServiceTests.Shutdown_RejectsGetAndCreate" methodname="Shutdown_RejectsGetAndCreate" classname="ColorFactory.Tests.PoolServiceTests" runstate="Runnable" seed="720093734" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000543" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1054" name="Unity.Addressables.DocExampleCode.Editor.Tests.dll" fullname="C:/Users/anhtdt/AppData/Local/Temp/claude/D--Repositories-PuzzlePortfolio-ColorFactory/207635e7-c5a2-4fcc-8171-ec95e9b471f1/scratchpad/ColorFactoryTest/Library/ScriptAssemblies/Unity.Addressables.DocExampleCode.Editor.Tests.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.001022" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="45872" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1055" name="AddressableAssets" fullname="AddressableAssets" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000717" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1056" name="DocExampleCode" fullname="AddressableAssets.DocExampleCode" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000598" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1052" name="TestStub" fullname="AddressableAssets.DocExampleCode.TestStub" classname="AddressableAssets.DocExampleCode.TestStub" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000462" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1053" name="RequiredTest" fullname="AddressableAssets.DocExampleCode.TestStub.RequiredTest" methodname="RequiredTest" classname="AddressableAssets.DocExampleCode.TestStub" runstate="Runnable" seed="1373274189" result="Passed" start-time="2026-11-03 03:13:12Z" end-time="2026-11-03 03:13:12Z" duration="0.000077" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/anhtdt/AppData/LocalLow/PuzzlePortfolio/ColorFactory\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

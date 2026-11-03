@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Passed" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.2632491">
+  <test-suite type="TestSuite" id="1013" name="ColorFactory" fullname="ColorFactory" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.263249" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1007" name="ColorFactory.Tests.PlayMode.dll" fullname="C:/Users/anhtdt/AppData/Local/Temp/claude/D--Repositories-PuzzlePortfolio-ColorFactory/207635e7-c5a2-4fcc-8171-ec95e9b471f1/scratchpad/ColorFactoryTest/Library/ScriptAssemblies/ColorFactory.Tests.PlayMode.dll" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.257840" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="39404" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1008" name="ColorFactory" fullname="ColorFactory" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.257319" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1009" name="Tests" fullname="ColorFactory.Tests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.257045" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestFixture" id="1001" name="AddressableLifecycleTests" fullname="ColorFactory.Tests.AddressableLifecycleTests" classname="ColorFactory.Tests.AddressableLifecycleTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.256083" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1004" name="CancelledLoad_PredictedCancellation_LeavesNoEntries" fullname="ColorFactory.Tests.AddressableLifecycleTests.CancelledLoad_PredictedCancellation_LeavesNoEntries" methodname="CancelledLoad_PredictedCancellation_LeavesNoEntries" classname="ColorFactory.Tests.AddressableLifecycleTests" runstate="Runnable" seed="195942403" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.018429" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1002" name="InvalidKey_PredictedArgumentException_LeavesNoEntries" fullname="ColorFactory.Tests.AddressableLifecycleTests.InvalidKey_PredictedArgumentException_LeavesNoEntries" methodname="InvalidKey_PredictedArgumentException_LeavesNoEntries" classname="ColorFactory.Tests.AddressableLifecycleTests" runstate="Runnable" seed="1725652527" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.003329" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1005" name="LoadLevel_ThenReleaseAll_IsIdempotent_AndClosesScope" fullname="ColorFactory.Tests.AddressableLifecycleTests.LoadLevel_ThenReleaseAll_IsIdempotent_AndClosesScope" methodname="LoadLevel_ThenReleaseAll_IsIdempotent_AndClosesScope" classname="ColorFactory.Tests.AddressableLifecycleTests" runstate="Runnable" seed="281922903" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.111715" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1003" name="MissingLevel999_PredictedInvalidOperation_FinishesAndLeavesNoEntries" fullname="ColorFactory.Tests.AddressableLifecycleTests.MissingLevel999_PredictedInvalidOperation_FinishesAndLeavesNoEntries" methodname="MissingLevel999_PredictedInvalidOperation_FinishesAndLeavesNoEntries" classname="ColorFactory.Tests.AddressableLifecycleTests" runstate="Runnable" seed="1542897894" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.009595" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[UnityEngine.AddressableAssets.InvalidKeyException: Exception of type 'UnityEngine.AddressableAssets.InvalidKeyException' was thrown. No Location found for Key=Level_999
+]]></output>
+            </test-case>
+            <test-case id="1006" name="TwoScopes_ShareOneAsset_UntilBothRelease" fullname="ColorFactory.Tests.AddressableLifecycleTests.TwoScopes_ShareOneAsset_UntilBothRelease" methodname="TwoScopes_ShareOneAsset_UntilBothRelease" classname="ColorFactory.Tests.AddressableLifecycleTests" runstate="Runnable" seed="489977188" result="Passed" start-time="2026-11-03 04:06:44Z" end-time="2026-11-03 04:06:44Z" duration="0.102123" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: C:/Users/anhtdt/AppData/LocalLow/PuzzlePortfolio/ColorFactory\TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

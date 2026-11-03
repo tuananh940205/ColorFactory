@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using Unity.Profiling;
 using UnityEngine;
@@ -159,7 +158,7 @@ namespace ColorFactory.Benchmark
         /// </summary>
         private double MeasureAverageMs(Action action)
         {
-            var stopwatch = Stopwatch.StartNew();
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
 
             for (int iteration = 0; iteration < iterations; iteration++)
                 action();

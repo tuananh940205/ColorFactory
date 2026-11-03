@@ -61,10 +61,14 @@ namespace ColorFactory.Core
             ValidateKey(key);
             cancellationToken.ThrowIfCancellationRequested();
 
-            Entry entry = await ReserveAsync<T>(key);
+            // Reserve nằm trong try để lỗi đồng bộ của Addressables (key không hợp lệ) cũng được bọc
+            // thành InvalidOperationException như các lỗi load khác.
+            Entry entry = null;
 
             try
             {
+                entry = await ReserveAsync<T>(key);
+
                 await WaitWithCancellation(entry.Completion, cancellationToken);
                 cancellationToken.ThrowIfCancellationRequested();
 
@@ -81,9 +85,20 @@ namespace ColorFactory.Core
 
                 return new AssetLease<T>(this, key, asset);
             }
+            catch (Exception exception) when (entry == null &&
+                                              exception is not OperationCanceledException &&
+                                              exception is not InvalidOperationException)
+            {
+                // Lỗi xảy ra khi reserve (chưa tạo entry nên không có gì để release): bọc lại thành InvalidOperationException.
+                throw new InvalidOperationException(
+                    $"Addressables failed to load key '{key}'.", exception);
+            }
             catch
             {
-                await ReleaseAsync(key);
+                // Chỉ release khi đã reserve thành công; reserve lỗi không tăng OwnerCount nên không được release.
+                if (entry != null)
+                    await ReleaseAsync(key);
+
                 throw;
             }
         }

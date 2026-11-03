@@ -21,7 +21,8 @@
 - [ ] Bài 25 — Analytics mock và gameplay events: `IAnalyticsService`, `LocalAnalyticsService`, 8 event kiểu hóa và `LESSON_25_SETUP.md` đã thêm; chờ kiểm thử trong Unity Editor.
 - [ ] Bài 26 — Hint solver Jobs/Burst benchmark: `ManagedHintBatchScorer`, `HintScoreJob`, `NativeHintBatch`, harness và `LESSON_26_SETUP.md` đã thêm; **chưa có số đo**, cần chạy Development Build trên Android để tạo `docs/profiling/benchmark.csv`.
 - [ ] Bài 27 — Level 04–15 và cân bằng: 12 LevelData, catalog 15 level, `LevelBatchRules` + menu `Color Factory > Validate Level Catalog`, `LESSON_27_SETUP.md` đã thêm. **Chờ Unity validate; còn 2 vấn đề cần quyết định:** Level_003 không có khay trống, Level_001 có 3 sao (8) thấp hơn nước tối thiểu (10).
-- [ ] Bài 28 through Bài 30 in `LESSON_PLAN.md`.
+- [x] Bài 28 — Test suite: 41 Edit Mode + 5 Play Mode test đã chạy thật (batch, Unity 6000.3.25f1) đều pass; evidence trong `docs/profiling/test_*_results.xml`; `LESSON_28_SETUP.md` đã thêm. Còn screenshot Test Runner và smoke scene thủ công.
+- [ ] Bài 29 through Bài 30 in `LESSON_PLAN.md`.
 
 ## Manual regression checklist after every gameplay lesson
 

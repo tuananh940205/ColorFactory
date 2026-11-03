@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b6e4591c64a5ae4bbd77fa37b0c75cf, type: 3}
   m_Name: Level_003
   m_EditorClassIdentifier: Assembly-CSharp::ColorFactory.Levels.LevelData
-  levelId: 2
+  levelId: 3
   trayCapacity: 6
   threeStarMoveTarget: 24
   twoStarMoveTarget: 32
@@ -27,3 +27,4 @@ MonoBehaviour:
   - colors: 020000000000000001000000
   - colors: 020000000000000001000000
   - colors: 02000000000000000100000002000000
+  - colors: 
