@@ -19,7 +19,8 @@
 ## Upcoming
 
 - [ ] Bài 25 — Analytics mock và gameplay events: `IAnalyticsService`, `LocalAnalyticsService`, 8 event kiểu hóa và `LESSON_25_SETUP.md` đã thêm; chờ kiểm thử trong Unity Editor.
-- [ ] Bài 26 through Bài 30 in `LESSON_PLAN.md`.
+- [ ] Bài 26 — Hint solver Jobs/Burst benchmark: `ManagedHintBatchScorer`, `HintScoreJob`, `NativeHintBatch`, harness và `LESSON_26_SETUP.md` đã thêm; **chưa có số đo**, cần chạy Development Build trên Android để tạo `docs/profiling/benchmark.csv`.
+- [ ] Bài 27 through Bài 30 in `LESSON_PLAN.md`.
 
 ## Manual regression checklist after every gameplay lesson
 
